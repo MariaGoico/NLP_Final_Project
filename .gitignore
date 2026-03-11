@@ -1,0 +1,7 @@
+videos
+*.mp4
+*.mp3
+.python-version
+pyproject.toml
+uv.lock
+whisper
