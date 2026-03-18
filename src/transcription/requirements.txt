@@ -5,3 +5,11 @@ psycopg2-binary
 minio
 python-multipart
 numpy
+moviepy
+transformers
+torch
+torchvision
+Pillow
+sentence-transformers
+qdrant-client
+llama-cpp-python

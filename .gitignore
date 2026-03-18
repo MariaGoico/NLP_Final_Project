@@ -5,3 +5,7 @@ videos
 pyproject.toml
 uv.lock
 whisper
+uploads
+models
+__pycache__
+data

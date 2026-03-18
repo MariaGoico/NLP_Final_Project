@@ -7,7 +7,7 @@ np.random.seed(42)
 
 _model = None
 
-def get_model(size: str = "large-v3"):
+def get_model(size: str = "base"):
     global _model
     if _model is None:
         _model = whisper.load_model(size)
@@ -28,8 +28,8 @@ def transcribe(video_path: str) -> list[dict]:
     segments = []
     for seg in result["segments"]:
         segments.append({
-            "start": round(seg["start"], 2),
-            "end":   round(seg["end"],   2),
+            "start": float(round(seg["start"], 2)),
+            "end":   float(round(seg["end"],   2)),
             "text":  seg["text"].strip(),
         })
     return segments
