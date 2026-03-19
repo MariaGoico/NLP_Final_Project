@@ -6,10 +6,8 @@ from .db import init_db, get_conn
 from .storage import upload_file, upload_frame
 from .transcriber import transcribe
 from .vision import describe_frame
-from .indexer import index_segments
+from .indexer import index_segments, get_client, COLLECTION, get_model as get_embedder
 from .llm import answer as llm_answer
-from .indexer import get_client, COLLECTION
-from sentence_transformers import SentenceTransformer
 
 app = FastAPI(title="Transcription Service")
 
@@ -36,11 +34,9 @@ async def upload_video(file: UploadFile = File(...)):
         tmp_path = tmp.name
 
     try:
-        # 1. Subir vídeo a MinIO
         object_name = f"{uuid.uuid4()}{suffix}"
         minio_path = upload_file(tmp_path, object_name)
 
-        # 2. Registrar vídeo en PostgreSQL
         with get_conn() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -50,10 +46,8 @@ async def upload_video(file: UploadFile = File(...)):
                 video_id = cur.fetchone()[0]
             conn.commit()
 
-        # 3. Transcribir con Whisper
         segments = transcribe(tmp_path)
 
-        # 4. Extraer frames, describir y guardar segmentos
         saved_segments = []
         with get_conn() as conn:
             with conn.cursor() as cur:
@@ -90,13 +84,9 @@ async def upload_video(file: UploadFile = File(...)):
                         "scene_desc": scene_desc,
                     })
 
-                cur.execute(
-                    "UPDATE videos SET status='indexed' WHERE id=%s",
-                    (video_id,),
-                )
+                cur.execute("UPDATE videos SET status='indexed' WHERE id=%s", (video_id,))
             conn.commit()
 
-        # 5. Indexar en Qdrant
         index_segments(saved_segments, video_id)
 
         return JSONResponse({
@@ -127,32 +117,47 @@ def get_segments(video_id: int):
 @app.post("/query")
 def query(payload: dict):
     question = payload.get("question", "")
+    video_id = payload.get("video_id")  # opcional: filtrar por vídeo
     if not question:
         raise HTTPException(status_code=400, detail="question is required")
 
     # 1. Embedding de la pregunta
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-    vector = model.encode(question).tolist()
+    embedder = get_embedder()
+    vector = embedder.encode(question).tolist()
 
-    # 2. Buscar en Qdrant
+    # 2. Buscar en Qdrant — traemos más candidatos para luego reranquear
     client = get_client()
-    results = client.search(
+    query_kwargs = dict(
         collection_name=COLLECTION,
-        query_vector=vector,
-        limit=4,
+        query=vector,
+        limit=8,  # traemos 8, luego filtramos a los mejores
+        with_payload=True,
+        score_threshold=0.2,  # descartamos resultados muy poco relevantes
     )
+    if video_id:
+        from qdrant_client.models import Filter, FieldCondition, MatchValue
+        query_kwargs["query_filter"] = Filter(
+            must=[FieldCondition(key="video_id", match=MatchValue(value=video_id))]
+        )
 
-    # 3. Construir contexto
-    context_segments = []
-    for r in results:
-        context_segments.append({
+    results = client.query_points(**query_kwargs).points
+
+    # 3. Reranking — ordenar por score y quedarnos con top 4
+    results = sorted(results, key=lambda r: r.score, reverse=True)[:4]
+
+    # 4. Construir contexto ordenado por timestamp
+    context_segments = sorted([
+        {
             "start": r.payload["start"],
             "end": r.payload["end"],
             "text": r.payload["text"],
             "scene_desc": r.payload.get("scene_desc"),
-        })
+            "score": round(r.score, 3),
+        }
+        for r in results
+    ], key=lambda x: x["start"])
 
-    # 4. Generar respuesta con LLaMA
+    # 5. Generar respuesta con LLaMA
     response = llm_answer(question, context_segments)
 
     return {
