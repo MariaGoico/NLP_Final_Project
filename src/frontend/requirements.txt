@@ -2,3 +2,6 @@ streamlit
 requests
 minio
 Pillow
+streamlit-extras
+streamlit-lottie
+streamlit-player

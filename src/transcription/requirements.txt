@@ -13,3 +13,5 @@ Pillow
 sentence-transformers
 qdrant-client
 llama-cpp-python
+numpy
+scikit-learn

@@ -18,28 +18,33 @@ def get_model():
     return _model
 
 def answer(question: str, context_segments: list[dict]) -> str:
-    context = ""
-    for i, seg in enumerate(context_segments, 1):
-        context += f"[Segment {i} | {seg['start']}s - {seg['end']}s]\n"
-        context += f"  Spoken: {seg['text']}\n"
-        if seg.get("scene_desc"):
-            context += f"  Visual: {seg['scene_desc']}\n"
-        context += "\n"
+    global_ctx = [s for s in context_segments if s.get("level") == "video_summary"]
+    specific_ctx = [s for s in context_segments if s.get("level") != "video_summary"]
 
     prompt = f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 You are a precise assistant that answers questions about video content.
-You are given the most relevant segments from a video, each with a timestamp, spoken text, and visual description.
+You have access to both a full video summary and specific relevant segments.
 Rules:
-- Always cite the timestamp (e.g. "at 10.8s") when referencing a segment.
-- If the answer is not found in the segments, say "I could not find that in the video."
+- For general questions (theme, topic, summary), use the full video context.
+- For specific questions, cite the timestamp (e.g. "at 10.8s").
+- If the answer is not found in the context, say "I could not find that in the video."
 - Be concise and direct.
-- Do not invent information not present in the segments.<|eot_id|>
+- Do not invent information not present in the context.<|eot_id|>
 <|start_header_id|>user<|end_header_id|>
-Relevant video segments:
-{context}
-Question: {question}<|eot_id|>
-<|start_header_id|>assistant<|end_header_id|>
 """
+
+    if global_ctx:
+        prompt += f"Full video context:\n{global_ctx[0]['text']}\n\n"
+
+    if specific_ctx:
+        prompt += "Relevant segments:\n"
+        for seg in specific_ctx:
+            prompt += f"[{seg['start']}s - {seg['end']}s] {seg['text']}"
+            if seg.get("scene_desc"):
+                prompt += f" (visual: {seg['scene_desc']})"
+            prompt += "\n"
+
+    prompt += f"\nQuestion: {question}<|eot_id|>\n<|start_header_id|>assistant<|end_header_id|>\n"
 
     model = get_model()
     response = model(

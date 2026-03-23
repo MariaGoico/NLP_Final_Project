@@ -7,13 +7,16 @@ from .storage import upload_file, upload_frame
 from .transcriber import transcribe
 from .vision import describe_frame
 from .indexer import index_segments, get_client, COLLECTION, get_model as get_embedder
+from .hierarchical import index_hierarchical, COLLECTION_WINDOWS, COLLECTION_VIDEOS
 from .llm import answer as llm_answer
 
 app = FastAPI(title="Transcription Service")
 
+
 @app.on_event("startup")
 def startup():
     init_db()
+
 
 def extract_frame(video_path: str, timestamp: float, output_path: str):
     cmd = [
@@ -25,6 +28,7 @@ def extract_frame(video_path: str, timestamp: float, output_path: str):
         output_path
     ]
     subprocess.run(cmd, check=True, capture_output=True)
+
 
 @app.post("/upload")
 async def upload_video(file: UploadFile = File(...)):
@@ -87,7 +91,11 @@ async def upload_video(file: UploadFile = File(...)):
                 cur.execute("UPDATE videos SET status='indexed' WHERE id=%s", (video_id,))
             conn.commit()
 
-        index_segments(saved_segments, video_id)
+        # Nivel 1 — segmentos, reutilizamos el modelo devuelto
+        model = index_segments(saved_segments, video_id)
+
+        # Niveles 2 y 3 — ventanas y resumen completo
+        index_hierarchical(saved_segments, video_id, model)
 
         return JSONResponse({
             "video_id": video_id,
@@ -99,6 +107,7 @@ async def upload_video(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         os.unlink(tmp_path)
+
 
 @app.get("/videos/{video_id}/segments")
 def get_segments(video_id: int):
@@ -114,57 +123,132 @@ def get_segments(video_id: int):
         for r in rows
     ]
 
+
 @app.post("/query")
 def query(payload: dict):
     question = payload.get("question", "")
-    video_id = payload.get("video_id")  # opcional: filtrar por vídeo
+    video_id = payload.get("video_id")
     if not question:
         raise HTTPException(status_code=400, detail="question is required")
 
-    # 1. Embedding de la pregunta
     embedder = get_embedder()
     vector = embedder.encode(question).tolist()
-
-    # 2. Buscar en Qdrant — traemos más candidatos para luego reranquear
     client = get_client()
-    query_kwargs = dict(
-        collection_name=COLLECTION,
-        query=vector,
-        limit=8,  # traemos 8, luego filtramos a los mejores
-        with_payload=True,
-        score_threshold=0.2,  # descartamos resultados muy poco relevantes
-    )
+
+    from qdrant_client.models import Filter, FieldCondition, MatchValue, MatchAny, HasIdCondition
+
+    # ── Nivel 3: resumen completo siempre ────────────────────────────────────
+    video_filter = None
     if video_id:
-        from qdrant_client.models import Filter, FieldCondition, MatchValue
-        query_kwargs["query_filter"] = Filter(
+        video_filter = Filter(
             must=[FieldCondition(key="video_id", match=MatchValue(value=video_id))]
         )
 
-    results = client.query_points(**query_kwargs).points
+    video_hits = client.query_points(
+        collection_name=COLLECTION_VIDEOS,
+        query=vector,
+        limit=3,
+        query_filter=video_filter,
+        with_payload=True,
+    ).points
 
-    # 3. Reranking — ordenar por score y quedarnos con top 4
-    results = sorted(results, key=lambda r: r.score, reverse=True)[:4]
+    # Contexto global siempre presente
+    global_context = None
+    if video_hits:
+        global_context = {
+            "start": video_hits[0].payload["start"],
+            "end": video_hits[0].payload["end"],
+            "text": video_hits[0].payload["full_text"],
+            "scene_desc": video_hits[0].payload.get("full_scenes"),
+            "score": round(video_hits[0].score, 3),
+            "level": "video_summary",
+        }
 
-    # 4. Construir contexto ordenado por timestamp
-    context_segments = sorted([
+    # ── Nivel 2: ventanas ─────────────────────────────────────────────────────
+    relevant_video_ids = [h.payload["video_id"] for h in video_hits]
+    if video_id and video_id not in relevant_video_ids:
+        relevant_video_ids.append(video_id)
+
+    window_filter = Filter(
+        must=[FieldCondition(key="video_id", match=MatchAny(any=relevant_video_ids))]
+    )
+    window_hits = client.query_points(
+        collection_name=COLLECTION_WINDOWS,
+        query=vector,
+        limit=4,
+        query_filter=window_filter,
+        with_payload=True,
+        score_threshold=0.15,
+    ).points
+
+    # ── Nivel 1: segmentos ────────────────────────────────────────────────────
+    candidate_segment_ids = []
+    for w in window_hits:
+        candidate_segment_ids.extend(w.payload["segment_ids"])
+    candidate_segment_ids = list(set(candidate_segment_ids))
+
+    segment_hits = []
+    if candidate_segment_ids:
+        segment_filter = Filter(
+            must=[HasIdCondition(has_id=candidate_segment_ids)]
+        )
+        segment_hits = client.query_points(
+            collection_name=COLLECTION,
+            query=vector,
+            limit=4,
+            query_filter=segment_filter,
+            with_payload=True,
+            score_threshold=0.15,
+        ).points
+        segment_hits = sorted(segment_hits, key=lambda r: r.score, reverse=True)[:4]
+
+    specific_segments = sorted([
         {
             "start": r.payload["start"],
             "end": r.payload["end"],
             "text": r.payload["text"],
             "scene_desc": r.payload.get("scene_desc"),
             "score": round(r.score, 3),
+            "level": "segment",
         }
-        for r in results
+        for r in segment_hits
     ], key=lambda x: x["start"])
 
-    # 5. Generar respuesta con LLaMA
+    # ── Construir contexto final: resumen global + segmentos específicos ──────
+    context_segments = []
+    if global_context:
+        context_segments.append(global_context)
+    context_segments.extend(specific_segments)
+
     response = llm_answer(question, context_segments)
 
     return {
         "question": question,
         "answer": response,
-        "sources": context_segments,
+        "sources": specific_segments,  # en UI solo mostramos segmentos específicos
+        "retrieval_levels_used": {
+            "videos": len(video_hits),
+            "windows": len(window_hits),
+            "segments": len(segment_hits),
+            "level_used": "hierarchical_full",
+        }
     }
+
+@app.get("/videos")
+def list_videos():
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT id, filename, minio_path, status, created_at FROM videos ORDER BY created_at DESC")
+            rows = cur.fetchall()
+    return [
+        {
+            "id": r[0], 
+            "filename": r[1], 
+            "minio_path": r[2], 
+            "status": r[3], 
+            "created_at": str(r[4])
+        } for r in rows
+    ]
 
 @app.get("/health")
 def health():

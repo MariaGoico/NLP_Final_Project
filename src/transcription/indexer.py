@@ -9,6 +9,7 @@ VECTOR_SIZE = 384
 
 _model = None
 
+
 def get_model():
     global _model
     if _model is None:
@@ -17,11 +18,13 @@ def get_model():
         print("Sentence-transformers model loaded.")
     return _model
 
+
 def get_client():
     return QdrantClient(
         host=os.getenv("QDRANT_HOST", "qdrant"),
         port=int(os.getenv("QDRANT_PORT", 6333)),
     )
+
 
 def ensure_collection():
     client = get_client()
@@ -32,16 +35,14 @@ def ensure_collection():
             vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
         )
 
+
 def build_text(seg: dict) -> str:
-    """
-    Combina texto hablado y descripción visual dando más peso al texto.
-    Repetimos el texto 2 veces para que tenga más peso semántico.
-    """
     text = seg["text"].strip()
     scene = seg.get("scene_desc", "") or ""
     if scene:
         return f"{text} {text} {scene}"
     return text
+
 
 def index_segments(segments: list[dict], video_id: int):
     model = get_model()
@@ -69,3 +70,6 @@ def index_segments(segments: list[dict], video_id: int):
 
     client.upsert(collection_name=COLLECTION, points=points)
     print(f"Indexed {len(points)} segments for video {video_id}")
+    
+    # Devolvemos el modelo para reutilizarlo en el índice jerárquico
+    return model

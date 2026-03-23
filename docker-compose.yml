@@ -18,6 +18,22 @@ services:
     ports: ["9000:9000", "9001:9001"]
     volumes: ["./data/minio:/data"]
 
+  model-downloader:
+    image: alpine/curl
+    volumes:
+      - ./models:/models
+    command: >
+      sh -c "
+        if [ ! -f /models/llama-3.2-1b-instruct-q4_k_m.gguf ]; then
+          echo 'Model not found, downloading...'
+          curl -L -o /models/llama-3.2-1b-instruct-q4_k_m.gguf
+          https://huggingface.co/Fetuffo78/Llama-3.2-1B-Instruct-Q4_K_M-GGUF/resolve/main/llama-3.2-1b-instruct-q4_k_m.gguf
+          echo 'Download complete.'
+        else
+          echo 'Model already exists, skipping download.'
+        fi
+      "
+
   transcription:
     build: ./src/transcription
     ports: ["8001:8001"]
@@ -34,10 +50,11 @@ services:
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
       QDRANT_HOST: qdrant
-      QDRANT_PORT: 6333 
+      QDRANT_PORT: 6333
     depends_on:
       - postgres
       - minio
+      - model-downloader
     # deploy:
     #   resources:
     #     reservations:
