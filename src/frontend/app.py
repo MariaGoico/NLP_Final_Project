@@ -26,7 +26,6 @@ def load_frame(frame_path: str) -> Image.Image | None:
     except Exception:
         return None
 
-# Función: Descargar el video entero en memoria
 @st.cache_data(show_spinner=False)
 def load_video_bytes(video_path: str) -> bytes | None:
     if not video_path:
@@ -39,6 +38,16 @@ def load_video_bytes(video_path: str) -> bytes | None:
     except Exception as e:
         st.error(f"Error loading video bytes: {e}")
         return None
+
+# Obtener la lista de videos del backend
+def get_all_videos():
+    try:
+        r = requests.get(f"{API_URL}/videos", timeout=5)
+        if r.status_code == 200:
+            return r.json()
+    except Exception:
+        return []
+    return []
 
 # ── Layout & Modern Styling ────────────────────────────────────────────────
 st.set_page_config(page_title="Video RAG", page_icon="🎬", layout="wide")
@@ -61,7 +70,7 @@ st.markdown("""
         border-radius: 10px; 
         padding: 15px; 
         background: white; 
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     }
     
@@ -77,6 +86,13 @@ st.title("🎬 Video RAG")
 tab_upload, tab_segments, tab_chat, tab_library = st.tabs([
     "📤 Upload", "🎞️ Segments", "💬 Chat", "📁 Library"
 ])
+
+video_list = get_all_videos()
+
+if video_list:
+    video_options = {f"ID: {v['id']} | {v['filename']}": v['id'] for v in video_list}
+else:
+    video_options = {}
 
 # ── TAB 1: Upload ────────────────────────────────────────────────────────────
 with tab_upload:
@@ -94,78 +110,134 @@ with tab_upload:
             data = response.json()
             st.success(f"✅ Done! Video ID: **{data['video_id']}**")
             st.session_state["video_id"] = data["video_id"]
+            st.rerun()
         else:
             st.error(f"Error: {response.text}")
 
 # ── TAB 2: Segments ──────────────────────────────────────────────────────────
 with tab_segments:
     st.header("Video segments")
-    video_id_input = st.number_input("Video ID", min_value=1, step=1, value=st.session_state.get("video_id", 1))
+    
+    if not video_options:
+        st.info("No videos found. Please upload a video first.")
+    else:
+        current_vid = st.session_state.get("video_id")
+        default_index = 0
+        if current_vid:
+            for idx, vid in enumerate(video_options.values()):
+                if vid == current_vid:
+                    default_index = idx
+                    break
 
-    if st.button("Load segments"):
-        with st.spinner("Loading..."):
-            r = requests.get(f"{API_URL}/videos/{video_id_input}/segments", timeout=30)
-        if r.status_code == 200:
-            st.session_state["segments"] = r.json()
-            st.session_state["segments_video_id"] = video_id_input
+        selected_vid_str = st.selectbox("Select a Video", options=list(video_options.keys()), index=default_index, key="seg_select")
+        video_id_input = video_options[selected_vid_str]
 
-    if "segments" in st.session_state:
-        for seg in st.session_state["segments"]:
-            with st.expander(f"⏱ {seg['start']}s – {seg['end']}s | {seg['text']}"):
-                col1, col2 = st.columns([1, 2])
-                with col1:
-                    img = load_frame(seg.get("frame_path"))
-                    if img: st.image(img)
-                with col2:
-                    st.markdown(f"**🗣 Spoken:** {seg['text']}")
-                    if seg.get("scene_desc"):
-                        st.markdown(f"**👁 Visual:** {seg['scene_desc']}")
+        if st.button("Load segments"):
+            with st.spinner("Loading..."):
+                r = requests.get(f"{API_URL}/videos/{video_id_input}/segments", timeout=30)
+            if r.status_code == 200:
+                st.session_state["segments"] = r.json()
+                st.session_state["segments_video_id"] = video_id_input
+                st.session_state["video_id"] = video_id_input
+
+        if "segments" in st.session_state and st.session_state.get("segments_video_id") == video_id_input:
+            for seg in st.session_state["segments"]:
+                with st.expander(f"⏱ {seg['start']}s – {seg['end']}s | {seg['text']}"):
+                    col1, col2 = st.columns([1, 2])
+                    with col1:
+                        img = load_frame(seg.get("frame_path"))
+                        if img: st.image(img)
+                    with col2:
+                        st.markdown(f"**🗣 Spoken:** {seg['text']}")
+                        if seg.get("scene_desc"):
+                            st.markdown(f"**👁 Visual:** {seg['scene_desc']}")
 
 # ── TAB 3: Chat ──────────────────────────────────────────────────────────────
 with tab_chat:
     st.header("Ask about the video")
-    video_id_chat = st.number_input("Video ID", min_value=1, step=1, value=st.session_state.get("video_id", 1), key="chat_vid")
     
-    if "messages" not in st.session_state: st.session_state["messages"] = []
+    if not video_options:
+        st.info("No videos found. Please upload a video first.")
+    else:
+        current_vid_chat = st.session_state.get("video_id")
+        default_index_chat = 0
+        if current_vid_chat:
+            for idx, vid in enumerate(video_options.values()):
+                if vid == current_vid_chat:
+                    default_index_chat = idx
+                    break
 
-    for msg in st.session_state["messages"]:
-        with st.chat_message(msg["role"]): st.markdown(msg["content"])
+        selected_vid_str_chat = st.selectbox("Select a Video to query", options=list(video_options.keys()), index=default_index_chat, key="chat_select")
+        video_id_chat = video_options[selected_vid_str_chat]
+        
+        # Resetear el chat si cambias de video
+        if video_id_chat != st.session_state.get("video_id"):
+            st.session_state["video_id"] = video_id_chat
+            st.session_state["messages"] = []
+        
+        if "messages" not in st.session_state: 
+            st.session_state["messages"] = []
 
-    if prompt := st.chat_input("Ask something..."):
-        st.session_state["messages"].append({"role": "user", "content": prompt})
-        with st.chat_message("user"): st.markdown(prompt)
+        # Mostrar historial (incluyendo sources y levels guardados)
+        for msg in st.session_state["messages"]:
+            with st.chat_message(msg["role"]): 
+                st.markdown(msg["content"])
+                if "sources" in msg and msg["sources"]:
+                    with st.expander("📎 Sources"):
+                        for src in msg["sources"]:
+                            st.markdown(f"- **[{src['start']}s – {src['end']}s]** {src['text']} *(score: {src['score']})*")
+                if "levels" in msg and msg["levels"]:
+                    levels = msg["levels"]
+                    st.caption(f"🔍 Retrieval: {levels['videos']} videos → {levels['windows']} windows → {levels['segments']} segments")
 
-        r = requests.post(f"{API_URL}/query", json={"question": prompt, "video_id": int(video_id_chat)})
-        if r.status_code == 200:
-            data = r.json()
-            st.markdown(data["answer"])
-            
-            if "sources" in data and data["sources"]:
-                with st.expander("📎 Sources"):
-                    for src in data["sources"]:
-                        st.markdown(f"- **[{src['start']}s – {src['end']}s]** {src['text']} *(score: {src['score']})*")
+        # Input
+        if prompt := st.chat_input("Ask something about the video..."):
+            st.session_state["messages"].append({"role": "user", "content": prompt})
+            with st.chat_message("user"): 
+                st.markdown(prompt)
 
-            st.session_state["messages"].append({"role": "assistant", "content": data["answer"]})
-            st.rerun()
-        else:
-            st.error("Failed to fetch response.")
+            # Contenedor del asistente con el spinner nativo
+            with st.chat_message("assistant"):
+                with st.spinner("Thinking..."):
+                    r = requests.post(f"{API_URL}/query", json={"question": prompt, "video_id": int(video_id_chat)}, timeout=120)
+                
+                if r.status_code == 200:
+                    data = r.json()
+                    answer = data["answer"]
+                    sources = data.get("sources", [])
+                    levels = data.get("retrieval_levels_used")
+
+                    st.markdown(answer)
+                    
+                    if sources:
+                        with st.expander("📎 Sources"):
+                            for src in sources:
+                                st.markdown(f"- **[{src['start']}s – {src['end']}s]** {src['text']} *(score: {src['score']})*")
+                    
+                    if levels:
+                        st.caption(f"🔍 Retrieval: {levels['videos']} videos → {levels['windows']} windows → {levels['segments']} segments")
+
+                    # Guardar en el historial la respuesta, las fuentes y los niveles
+                    st.session_state["messages"].append({
+                        "role": "assistant", 
+                        "content": answer,
+                        "sources": sources,
+                        "levels": levels
+                    })
+                else:
+                    st.error(f"Error: {r.text}")
 
 # ── TAB 4: Library ───────────────────────────────────────────────────────────
 with tab_library:
     st.header("Video Library")
     
     if st.button("🔄 Refresh Library"):
-        try:
-            r = requests.get(f"{API_URL}/videos", timeout=10)
-            if r.status_code == 200:
-                st.session_state["library"] = r.json()
-            else:
-                st.error("Error fetching library.")
-        except Exception as e:
-            st.error(f"Backend connection error: {e}")
-
-    if "library" in st.session_state:
-        for video in st.session_state["library"]:
+        st.rerun() 
+        
+    if not video_list:
+        st.info("The library is currently empty. Upload a video to get started!")
+    else:
+        for video in video_list:
             clean_date = video['created_at'].split('.')[0].replace('T', ' ')
             
             with st.container():
@@ -176,17 +248,12 @@ with tab_library:
                     </div>
                 """, unsafe_allow_html=True)
                 
-                # CREAMOS COLUMNAS PARA LIMITAR EL TAMAÑO DEL VIDEO
-                # [1, 1] significa 50% video, 50% espacio en blanco. 
-                # Si quieres el video a un tercio de pantalla, usa [1, 2]
                 col_video, col_empty = st.columns([1, 1])
                 
                 with col_video:
                     with st.spinner(f"Loading video {video['id']}..."):
                         video_bytes = load_video_bytes(video['minio_path'])
-                        
                         if video_bytes:
-                            # Streamlit adaptará el reproductor al ancho de 'col_video'
                             st.video(video_bytes, format="video/mp4")
                         else:
                             st.error("Could not load video file from storage.")
