@@ -22,12 +22,13 @@ services:
     image: alpine/curl
     volumes:
       - ./models:/models
-    command: >
+    # CAMBIO 1: Usamos '|' para mantener los saltos de línea en el script
+    command: |
       sh -c "
         if [ ! -f /models/llama-3.2-1b-instruct-q4_k_m.gguf ]; then
           echo 'Model not found, downloading...'
-          curl -L -o /models/llama-3.2-1b-instruct-q4_k_m.gguf
-          https://huggingface.co/Fetuffo78/Llama-3.2-1B-Instruct-Q4_K_M-GGUF/resolve/main/llama-3.2-1b-instruct-q4_k_m.gguf
+          # CAMBIO 2: El comando curl y la URL deben estar en la misma línea
+          curl -L -o /models/llama-3.2-1b-instruct-q4_k_m.gguf https://huggingface.co/Fetuffo78/Llama-3.2-1B-Instruct-Q4_K_M-GGUF/resolve/main/llama-3.2-1b-instruct-q4_k_m.gguf
           echo 'Download complete.'
         else
           echo 'Model already exists, skipping download.'
@@ -51,10 +52,14 @@ services:
       MINIO_SECRET_KEY: minioadmin
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
+    # CAMBIO 3: Obligamos a que espere a que la descarga termine completamente
     depends_on:
-      - postgres
-      - minio
-      - model-downloader
+      postgres:
+        condition: service_started
+      minio:
+        condition: service_started
+      model-downloader:
+        condition: service_completed_successfully
     # deploy:
     #   resources:
     #     reservations:
@@ -71,6 +76,7 @@ services:
       MINIO_ENDPOINT: minio:9000
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
+      MINIO_EXTERNAL_URL: http://localhost:9000
     depends_on:
       - transcription
 
