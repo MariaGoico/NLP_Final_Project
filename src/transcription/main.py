@@ -334,3 +334,10 @@ async def process_url(payload: dict):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.post("/metadata")
+async def get_metadata(payload: dict):
+    import yt_dlp
+    with yt_dlp.YoutubeDL({"quiet": True}) as ydl:
+        info = ydl.extract_info(payload["url"], download=False)
+        return {"title": info.get("title", ""), "description": info.get("description", "")}

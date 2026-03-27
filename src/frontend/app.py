@@ -5,6 +5,7 @@ from minio import Minio
 from PIL import Image
 import io
 import os
+import re
 
 API_URL = os.getenv("API_URL", "http://transcription:8001")
 MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT", "minio:9000")
@@ -68,8 +69,10 @@ FILMS = [
     },
 ]
 
+
 def get_minio():
     return Minio(MINIO_ENDPOINT, access_key=MINIO_ACCESS_KEY, secret_key=MINIO_SECRET_KEY, secure=False)
+
 
 def load_frame(frame_path: str) -> Image.Image | None:
     if not frame_path:
@@ -82,8 +85,9 @@ def load_frame(frame_path: str) -> Image.Image | None:
     except Exception:
         return None
 
+
 def get_processed_videos() -> dict:
-    """Devuelve dict title → video_id de vídeos ya procesados."""
+    """Devuelve dict title -> video_id de vídeos ya procesados."""
     try:
         r = requests.get(f"{API_URL}/health", timeout=5)
         if r.status_code != 200:
@@ -92,7 +96,34 @@ def get_processed_videos() -> dict:
         return {}
     return st.session_state.get("processed_videos", {})
 
-# ── Página config ────────────────────────────────────────────────────────────
+
+def extract_youtube_id(url: str) -> str | None:
+    """Extract YouTube video ID from various URL formats."""
+    patterns = [
+        r"(?:v=|\/)([0-9A-Za-z_-]{11}).*",
+        r"(?:embed\/)([0-9A-Za-z_-]{11})",
+        r"(?:youtu\.be\/)([0-9A-Za-z_-]{11})",
+        r"(?:shorts\/)([0-9A-Za-z_-]{11})",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, url)
+        if match:
+            return match.group(1)
+    return None
+
+
+def fetch_video_metadata(url: str) -> dict | None:
+    """Fetch video title and description from the backend /metadata endpoint."""
+    try:
+        r = requests.post(f"{API_URL}/metadata", json={"url": url}, timeout=30)
+        if r.status_code == 200:
+            return r.json()
+    except Exception:
+        pass
+    return None
+
+
+# ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="CineRAG",
     page_icon="🎬",
@@ -100,7 +131,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ── CSS personalizado ────────────────────────────────────────────────────────
+# ── Custom CSS ───────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
     .main-header {
@@ -119,13 +150,6 @@ st.markdown("""
         font-size: 1.1rem;
         color: #888;
         margin-top: 0.5rem;
-    }
-    .film-card {
-        background: #1a1a2e;
-        border-radius: 12px;
-        padding: 1rem;
-        border: 1px solid #2a2a4a;
-        height: 100%;
     }
     .film-title {
         font-size: 1.1rem;
@@ -151,18 +175,39 @@ st.markdown("""
         font-size: 0.75rem;
         font-weight: 600;
     }
-    .stChatMessage {background: #1a1a2e !important;}
+    .upload-section {
+        background: #0d0d1a;
+        border: 2px dashed #e50914;
+        border-radius: 16px;
+        padding: 2rem 2rem 1.5rem 2rem;
+        margin: 2rem 0 1rem 0;
+    }
+    .upload-section-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #fff;
+        margin: 0 0 0.25rem 0;
+    }
+    .upload-section-sub {
+        font-size: 0.85rem;
+        color: #777;
+        margin-bottom: 0;
+    }
     div[data-testid="stHorizontalBlock"] {gap: 1.5rem;}
 </style>
 """, unsafe_allow_html=True)
+    # .stChatMessage {background: #1a1a2e !important;}
 
-# ── Inicializar estado ───────────────────────────────────────────────────────
+
+# ── Session state ────────────────────────────────────────────────────────────
 if "processed_videos" not in st.session_state:
     st.session_state["processed_videos"] = {}
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 if "selected_film" not in st.session_state:
     st.session_state["selected_film"] = None
+if "custom_preview" not in st.session_state:
+    st.session_state["custom_preview"] = None  # {youtube_id, title, description, url, needs_manual?}
 
 # ── Header ───────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -177,7 +222,7 @@ st.divider()
 # ── Tabs ─────────────────────────────────────────────────────────────────────
 tab_catalog, tab_chat, tab_segments = st.tabs(["🎥 Catalog", "💬 Ask", "🎞️ Segments"])
 
-# ── TAB 1: Catálogo ──────────────────────────────────────────────────────────
+# ── TAB 1: Catalog ───────────────────────────────────────────────────────────
 with tab_catalog:
     st.markdown("### Browse & Process Trailers")
     st.caption("Watch the trailer, then click **Process** to index it for Q&A.")
@@ -188,12 +233,11 @@ with tab_catalog:
         with cols[i % 3]:
             is_processed = film["title"] in st.session_state["processed_videos"]
 
-            # Thumbnail + badge
             st.markdown(
                 f'<iframe width="100%" height="200" src="https://www.youtube.com/embed/{film["youtube_id"]}" '
                 f'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; '
                 f'gyroscope; picture-in-picture" allowfullscreen></iframe>',
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
 
             st.markdown(f'<p class="film-title">{film["title"]}</p>', unsafe_allow_html=True)
@@ -224,6 +268,127 @@ with tab_catalog:
                         except Exception as e:
                             st.error(f"Connection error: {e}")
 
+    # ── Custom YouTube URL uploader ──────────────────────────────────────────
+    st.markdown("""
+    <div class="upload-section">
+        <p class="upload-section-title">➕ Add your own trailer</p>
+        <p class="upload-section-sub">Paste any YouTube URL — we'll fetch the title, description and thumbnail automatically.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    url_col, btn_col = st.columns([5, 1])
+    with url_col:
+        custom_url = st.text_input(
+            "YouTube URL",
+            placeholder="https://www.youtube.com/watch?v=...",
+            label_visibility="collapsed",
+            key="custom_url_input",
+        )
+    with btn_col:
+        fetch_clicked = st.button("🔍 Fetch info", type="secondary", use_container_width=True)
+
+    if fetch_clicked:
+        if not custom_url.strip():
+            st.warning("Please paste a YouTube URL first.")
+        else:
+            video_id = extract_youtube_id(custom_url.strip())
+            if not video_id:
+                st.error("❌ Could not extract a valid YouTube video ID from that URL.")
+            else:
+                with st.spinner("Fetching video metadata..."):
+                    meta = fetch_video_metadata(custom_url.strip())
+
+                if meta:
+                    st.session_state["custom_preview"] = {
+                        "youtube_id": video_id,
+                        "title": meta.get("title", ""),
+                        "description": meta.get("description", ""),
+                        "url": custom_url.strip(),
+                        "needs_manual": False,
+                    }
+                else:
+                    # Metadata endpoint unavailable — show preview with manual fields
+                    st.session_state["custom_preview"] = {
+                        "youtube_id": video_id,
+                        "title": "",
+                        "description": "",
+                        "url": custom_url.strip(),
+                        "needs_manual": True,
+                    }
+
+    # ── Preview card ─────────────────────────────────────────────────────────
+    preview = st.session_state.get("custom_preview")
+    if preview:
+        st.markdown("---")
+        st.markdown("#### 🎬 Preview")
+        left, right = st.columns([1, 2])
+
+        with left:
+            st.markdown(
+                f'<iframe width="100%" height="185" '
+                f'src="https://www.youtube.com/embed/{preview["youtube_id"]}" '
+                f'frameborder="0" allowfullscreen></iframe>',
+                unsafe_allow_html=True,
+            )
+            # Also show the thumbnail image below the embed
+            st.image(
+                f'https://img.youtube.com/vi/{preview["youtube_id"]}/hqdefault.jpg',
+                caption="Thumbnail (hqdefault)",
+                use_container_width=True,
+            )
+
+        with right:
+            if preview["needs_manual"]:
+                st.caption("⚠️ Metadata endpoint not reachable — please fill in manually:")
+                final_title = st.text_input(
+                    "Title *", key="manual_title", placeholder="e.g. Interstellar Official Trailer"
+                )
+                final_desc = st.text_area(
+                    "Description", key="manual_desc",
+                    placeholder="Short description of the trailer...",
+                    height=100,
+                )
+            else:
+                final_title = st.text_input("Title", value=preview["title"], key="edit_title")
+                final_desc = st.text_area(
+                    "Description", value=preview["description"], key="edit_desc", height=100
+                )
+
+            st.write("")
+
+            already_indexed = final_title and final_title.strip() in st.session_state["processed_videos"]
+            if already_indexed:
+                vid_id = st.session_state["processed_videos"][final_title.strip()]
+                st.markdown(f'<span class="processed-badge">✓ Already indexed — ID {vid_id}</span>', unsafe_allow_html=True)
+            else:
+                proc_col, clear_col = st.columns([2, 1])
+                with proc_col:
+                    if st.button("⚙️ Process this trailer", key="process_custom", type="primary", use_container_width=True):
+                        if not final_title.strip():
+                            st.warning("Please provide a title before processing.")
+                        else:
+                            with st.spinner(f"Processing *{final_title}*... this may take a few minutes ⏳"):
+                                try:
+                                    r = requests.post(
+                                        f"{API_URL}/process-url",
+                                        json={"url": preview["url"], "title": final_title.strip()},
+                                        timeout=600,
+                                    )
+                                    if r.status_code == 200:
+                                        data = r.json()
+                                        st.session_state["processed_videos"][final_title.strip()] = data["video_id"]
+                                        st.success(f"✅ {final_title} indexed! ({data['segments']} segments)")
+                                        st.session_state["custom_preview"] = None
+                                        st.rerun()
+                                    else:
+                                        st.error(f"Error: {r.text}")
+                                except Exception as e:
+                                    st.error(f"Connection error: {e}")
+                with clear_col:
+                    if st.button("✖ Clear", key="clear_preview", use_container_width=True):
+                        st.session_state["custom_preview"] = None
+                        st.rerun()
+
 
 # ── TAB 2: Chat ───────────────────────────────────────────────────────────────
 with tab_chat:
@@ -234,7 +399,6 @@ with tab_chat:
     else:
         st.markdown("### Ask anything about the trailers")
 
-        # Selector de película
         film_options = {f"{title} (ID: {vid_id})": vid_id for title, vid_id in processed.items()}
         film_options["🎬 All processed trailers"] = None
         selected = st.selectbox("Select a film or search across all:", list(film_options.keys()))
@@ -242,7 +406,6 @@ with tab_chat:
 
         st.divider()
 
-        # Historial del chat
         for msg in st.session_state["messages"]:
             with st.chat_message(msg["role"]):
                 st.markdown(msg["content"])
