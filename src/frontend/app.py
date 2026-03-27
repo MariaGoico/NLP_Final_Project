@@ -1,17 +1,46 @@
+# src/frontend/app.py
 import streamlit as st
 import requests
-import io
-import os
 from minio import Minio
 from PIL import Image
+import io
+import os
 
-# ── Configuration ──────────────────────────────────────────────────────────
 API_URL = os.getenv("API_URL", "http://transcription:8001")
 MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT", "minio:9000")
 MINIO_ACCESS_KEY = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
 MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY", "minioadmin")
 
-@st.cache_resource
+FILMS = [
+    {
+        "title": "The Devil Wears Prada",
+        "year": 2006,
+        "genre": "Comedy / Drama",
+        "description": "A smart but naive college grad lands a job as an assistant to Miranda Priestly, the most powerful woman in fashion.",
+        "youtube_url": "https://www.youtube.com/watch?v=6ZOZwUQKu3E",
+        "youtube_id": "6ZOZwUQKu3E",
+        "thumbnail": "https://img.youtube.com/vi/6ZOZwUQKu3E/hqdefault.jpg",
+    },
+    {
+        "title": "Legally Blonde",
+        "year": 2001,
+        "genre": "Comedy / Romance",
+        "description": "Elle Woods, a fashionable sorority queen, follows her ex-boyfriend to Harvard Law and shows everyone she's capable of more.",
+        "youtube_url": "https://www.youtube.com/watch?v=vWOHwI_FgAo",
+        "youtube_id": "vWOHwI_FgAo",
+        "thumbnail": "https://img.youtube.com/vi/vWOHwI_FgAo/hqdefault.jpg",
+    },
+    {
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "year": 2001,
+        "genre": "Fantasy / Adventure",
+        "description": "An orphaned boy discovers he's a wizard and begins his education at Hogwarts School of Witchcraft and Wizardry.",
+        "youtube_url": "https://www.youtube.com/watch?v=VyHV0BRtdxo",
+        "youtube_id": "VyHV0BRtdxo",
+        "thumbnail": "https://img.youtube.com/vi/VyHV0BRtdxo/hqdefault.jpg",
+    },
+]
+
 def get_minio():
     return Minio(MINIO_ENDPOINT, access_key=MINIO_ACCESS_KEY, secret_key=MINIO_SECRET_KEY, secure=False)
 
@@ -26,236 +55,248 @@ def load_frame(frame_path: str) -> Image.Image | None:
     except Exception:
         return None
 
-@st.cache_data(show_spinner=False)
-def load_video_bytes(video_path: str) -> bytes | None:
-    if not video_path:
-        return None
+def get_processed_videos() -> dict:
+    """Devuelve dict title → video_id de vídeos ya procesados."""
     try:
-        bucket, obj = video_path.split("/", 1)
-        client = get_minio()
-        response = client.get_object(bucket, obj)
-        return response.read()
-    except Exception as e:
-        st.error(f"Error loading video bytes: {e}")
-        return None
-
-# Obtener la lista de videos del backend
-def get_all_videos():
-    try:
-        r = requests.get(f"{API_URL}/videos", timeout=5)
-        if r.status_code == 200:
-            return r.json()
+        r = requests.get(f"{API_URL}/health", timeout=5)
+        if r.status_code != 200:
+            return {}
     except Exception:
-        return []
-    return []
+        return {}
+    return st.session_state.get("processed_videos", {})
 
-# ── Layout & Modern Styling ────────────────────────────────────────────────
-st.set_page_config(page_title="Video RAG", page_icon="🎬", layout="wide")
+# ── Página config ────────────────────────────────────────────────────────────
+st.set_page_config(
+    page_title="CineRAG",
+    page_icon="🎬",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
 
+# ── CSS personalizado ────────────────────────────────────────────────────────
 st.markdown("""
-    <style>
-    .stApp { background-color: #f8f9fa; color: #212529; }
-    h1, h2, h3, .stMarkdown p, span { color: #212529 !important; }
-
-    .stChatMessage { 
-        border-radius: 12px; 
-        border: 1px solid #dee2e6; 
-        background-color: white !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        margin-bottom: 12px;
+<style>
+    .main-header {
+        text-align: center;
+        padding: 2rem 0 1rem 0;
     }
-
-    .video-card { 
-        border: 1px solid #dee2e6; 
-        border-radius: 10px; 
-        padding: 15px; 
-        background: white; 
-        margin-bottom: 5px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    .main-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #e50914, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
     }
-    
-    section[data-testid="stSidebar"] {
-        background-color: white;
-        border-right: 1px solid #dee2e6;
+    .main-subtitle {
+        font-size: 1.1rem;
+        color: #888;
+        margin-top: 0.5rem;
     }
-    </style>
+    .film-card {
+        background: #1a1a2e;
+        border-radius: 12px;
+        padding: 1rem;
+        border: 1px solid #2a2a4a;
+        height: 100%;
+    }
+    .film-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0.5rem 0 0.2rem 0;
+    }
+    .film-meta {
+        font-size: 0.8rem;
+        color: #e50914;
+        margin-bottom: 0.5rem;
+    }
+    .film-desc {
+        font-size: 0.85rem;
+        color: #aaa;
+        line-height: 1.4;
+    }
+    .processed-badge {
+        background: #1db954;
+        color: white;
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .stChatMessage {background: #1a1a2e !important;}
+    div[data-testid="stHorizontalBlock"] {gap: 1.5rem;}
+</style>
 """, unsafe_allow_html=True)
 
-st.title("🎬 Video RAG")
+# ── Inicializar estado ───────────────────────────────────────────────────────
+if "processed_videos" not in st.session_state:
+    st.session_state["processed_videos"] = {}
+if "messages" not in st.session_state:
+    st.session_state["messages"] = []
+if "selected_film" not in st.session_state:
+    st.session_state["selected_film"] = None
 
-tab_upload, tab_segments, tab_chat, tab_library = st.tabs([
-    "📤 Upload", "🎞️ Segments", "💬 Chat", "📁 Library"
-])
+# ── Header ───────────────────────────────────────────────────────────────────
+st.markdown("""
+<div class="main-header">
+    <p class="main-title">🎬 CineRAG</p>
+    <p class="main-subtitle">Ask anything about your favourite movie trailers</p>
+</div>
+""", unsafe_allow_html=True)
 
-video_list = get_all_videos()
+st.divider()
 
-if video_list:
-    video_options = {f"ID: {v['id']} | {v['filename']}": v['id'] for v in video_list}
-else:
-    video_options = {}
+# ── Tabs ─────────────────────────────────────────────────────────────────────
+tab_catalog, tab_chat, tab_segments = st.tabs(["🎥 Catalog", "💬 Ask", "🎞️ Segments"])
 
-# ── TAB 1: Upload ────────────────────────────────────────────────────────────
-with tab_upload:
-    st.header("Upload a video")
-    uploaded = st.file_uploader("Choose a video file", type=["mp4", "mkv", "avi", "mov"])
+# ── TAB 1: Catálogo ──────────────────────────────────────────────────────────
+with tab_catalog:
+    st.markdown("### Browse & Process Trailers")
+    st.caption("Watch the trailer, then click **Process** to index it for Q&A.")
+    st.write("")
 
-    if uploaded and st.button("Upload & Process", type="primary"):
-        with st.spinner("Uploading, transcribing and indexing... ⏳"):
-            response = requests.post(
-                f"{API_URL}/upload",
-                files={"file": (uploaded.name, uploaded.getvalue(), "video/mp4")},
-                timeout=600,
+    cols = st.columns(3)
+    for i, film in enumerate(FILMS):
+        with cols[i]:
+            is_processed = film["title"] in st.session_state["processed_videos"]
+
+            # Thumbnail + badge
+            st.markdown(
+                f'<iframe width="100%" height="200" src="https://www.youtube.com/embed/{film["youtube_id"]}" '
+                f'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; '
+                f'gyroscope; picture-in-picture" allowfullscreen></iframe>',
+                unsafe_allow_html=True
             )
-        if response.status_code == 200:
-            data = response.json()
-            st.success(f"✅ Done! Video ID: **{data['video_id']}**")
-            st.session_state["video_id"] = data["video_id"]
-            st.rerun()
-        else:
-            st.error(f"Error: {response.text}")
 
-# ── TAB 2: Segments ──────────────────────────────────────────────────────────
-with tab_segments:
-    st.header("Video segments")
-    
-    if not video_options:
-        st.info("No videos found. Please upload a video first.")
-    else:
-        current_vid = st.session_state.get("video_id")
-        default_index = 0
-        if current_vid:
-            for idx, vid in enumerate(video_options.values()):
-                if vid == current_vid:
-                    default_index = idx
-                    break
+            st.markdown(f'<p class="film-title">{film["title"]}</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="film-meta">{film["year"]} · {film["genre"]}</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="film-desc">{film["description"]}</p>', unsafe_allow_html=True)
+            st.write("")
 
-        selected_vid_str = st.selectbox("Select a Video", options=list(video_options.keys()), index=default_index, key="seg_select")
-        video_id_input = video_options[selected_vid_str]
+            if is_processed:
+                vid_id = st.session_state["processed_videos"][film["title"]]
+                st.markdown(f'<span class="processed-badge">✓ Indexed — ID {vid_id}</span>', unsafe_allow_html=True)
+                st.write("")
+            else:
+                if st.button("⚙️ Process trailer", key=f"process_{i}", type="primary"):
+                    with st.spinner(f"Downloading and processing *{film['title']}*... this may take a few minutes ⏳"):
+                        try:
+                            r = requests.post(
+                                f"{API_URL}/process-url",
+                                json={"url": film["youtube_url"], "title": film["title"]},
+                                timeout=600,
+                            )
+                            if r.status_code == 200:
+                                data = r.json()
+                                st.session_state["processed_videos"][film["title"]] = data["video_id"]
+                                st.success(f"✅ {film['title']} indexed! ({data['segments']} segments)")
+                                st.rerun()
+                            else:
+                                st.error(f"Error: {r.text}")
+                        except Exception as e:
+                            st.error(f"Connection error: {e}")
 
-        if st.button("Load segments"):
-            with st.spinner("Loading..."):
-                r = requests.get(f"{API_URL}/videos/{video_id_input}/segments", timeout=30)
-            if r.status_code == 200:
-                st.session_state["segments"] = r.json()
-                st.session_state["segments_video_id"] = video_id_input
-                st.session_state["video_id"] = video_id_input
 
-        if "segments" in st.session_state and st.session_state.get("segments_video_id") == video_id_input:
-            for seg in st.session_state["segments"]:
-                with st.expander(f"⏱ {seg['start']}s – {seg['end']}s | {seg['text']}"):
-                    col1, col2 = st.columns([1, 2])
-                    with col1:
-                        img = load_frame(seg.get("frame_path"))
-                        if img: st.image(img)
-                    with col2:
-                        st.markdown(f"**🗣 Spoken:** {seg['text']}")
-                        if seg.get("scene_desc"):
-                            st.markdown(f"**👁 Visual:** {seg['scene_desc']}")
-
-# ── TAB 3: Chat ──────────────────────────────────────────────────────────────
+# ── TAB 2: Chat ───────────────────────────────────────────────────────────────
 with tab_chat:
-    st.header("Ask about the video")
-    
-    if not video_options:
-        st.info("No videos found. Please upload a video first.")
+    processed = st.session_state["processed_videos"]
+
+    if not processed:
+        st.info("💡 Process at least one trailer from the **Catalog** tab to start asking questions.")
     else:
-        current_vid_chat = st.session_state.get("video_id")
-        default_index_chat = 0
-        if current_vid_chat:
-            for idx, vid in enumerate(video_options.values()):
-                if vid == current_vid_chat:
-                    default_index_chat = idx
-                    break
+        st.markdown("### Ask anything about the trailers")
 
-        selected_vid_str_chat = st.selectbox("Select a Video to query", options=list(video_options.keys()), index=default_index_chat, key="chat_select")
-        video_id_chat = video_options[selected_vid_str_chat]
-        
-        # Resetear el chat si cambias de video
-        if video_id_chat != st.session_state.get("video_id"):
-            st.session_state["video_id"] = video_id_chat
-            st.session_state["messages"] = []
-        
-        if "messages" not in st.session_state: 
-            st.session_state["messages"] = []
+        # Selector de película
+        film_options = {f"{title} (ID: {vid_id})": vid_id for title, vid_id in processed.items()}
+        film_options["🎬 All processed trailers"] = None
+        selected = st.selectbox("Select a film or search across all:", list(film_options.keys()))
+        active_video_id = film_options[selected]
 
-        # Mostrar historial (incluyendo sources y levels guardados)
+        st.divider()
+
+        # Historial del chat
         for msg in st.session_state["messages"]:
-            with st.chat_message(msg["role"]): 
+            with st.chat_message(msg["role"]):
                 st.markdown(msg["content"])
-                if "sources" in msg and msg["sources"]:
-                    with st.expander("📎 Sources"):
-                        for src in msg["sources"]:
-                            st.markdown(f"- **[{src['start']}s – {src['end']}s]** {src['text']} *(score: {src['score']})*")
-                if "levels" in msg and msg["levels"]:
-                    levels = msg["levels"]
-                    st.caption(f"🔍 Retrieval: {levels['videos']} videos → {levels['windows']} windows → {levels['segments']} segments")
 
-        # Input
-        if prompt := st.chat_input("Ask something about the video..."):
+        if prompt := st.chat_input("Ask about the trailer... e.g. 'What is the main character like?'"):
             st.session_state["messages"].append({"role": "user", "content": prompt})
-            with st.chat_message("user"): 
+            with st.chat_message("user"):
                 st.markdown(prompt)
 
-            # Contenedor del asistente con el spinner nativo
             with st.chat_message("assistant"):
-                with st.spinner("Thinking..."):
-                    r = requests.post(f"{API_URL}/query", json={"question": prompt, "video_id": int(video_id_chat)}, timeout=120)
-                
+                with st.spinner("Searching through the trailer..."):
+                    payload = {"question": prompt}
+                    if active_video_id:
+                        payload["video_id"] = active_video_id
+                    r = requests.post(
+                        f"{API_URL}/query",
+                        json=payload,
+                        timeout=120,
+                    )
                 if r.status_code == 200:
                     data = r.json()
                     answer = data["answer"]
                     sources = data.get("sources", [])
-                    levels = data.get("retrieval_levels_used")
+                    levels = data.get("retrieval_levels_used", {})
 
                     st.markdown(answer)
-                    
+
                     if sources:
                         with st.expander("📎 Sources"):
                             for src in sources:
                                 st.markdown(f"- **[{src['start']}s – {src['end']}s]** {src['text']} *(score: {src['score']})*")
-                    
-                    if levels:
-                        st.caption(f"🔍 Retrieval: {levels['videos']} videos → {levels['windows']} windows → {levels['segments']} segments")
 
-                    # Guardar en el historial la respuesta, las fuentes y los niveles
-                    st.session_state["messages"].append({
-                        "role": "assistant", 
-                        "content": answer,
-                        "sources": sources,
-                        "levels": levels
-                    })
+                    level_used = levels.get("level_used", "hierarchical")
+                    st.caption(f"🔍 {levels.get('videos', 0)} videos → {levels.get('windows', 0)} windows → {levels.get('segments', 0)} segments · *{level_used}*")
+
+                    st.session_state["messages"].append({"role": "assistant", "content": answer})
                 else:
                     st.error(f"Error: {r.text}")
 
-# ── TAB 4: Library ───────────────────────────────────────────────────────────
-with tab_library:
-    st.header("Video Library")
-    
-    if st.button("🔄 Refresh Library"):
-        st.rerun() 
-        
-    if not video_list:
-        st.info("The library is currently empty. Upload a video to get started!")
+        if st.session_state["messages"]:
+            if st.button("🗑️ Clear chat"):
+                st.session_state["messages"] = []
+                st.rerun()
+
+# ── TAB 3: Segments ───────────────────────────────────────────────────────────
+with tab_segments:
+    processed = st.session_state["processed_videos"]
+
+    if not processed:
+        st.info("💡 Process at least one trailer from the **Catalog** tab first.")
     else:
-        for video in video_list:
-            clean_date = video['created_at'].split('.')[0].replace('T', ' ')
-            
-            with st.container():
-                st.markdown(f"""
-                    <div class="video-card">
-                        <h3 style="margin:0px;">ID: {video['id']} | {video['filename']}</h3>
-                        <p style="color: #6c757d; font-size: 0.85rem; margin: 5px 0px;">Created: {clean_date}</p>
-                    </div>
-                """, unsafe_allow_html=True)
-                
-                col_video, col_empty = st.columns([1, 1])
-                
-                with col_video:
-                    with st.spinner(f"Loading video {video['id']}..."):
-                        video_bytes = load_video_bytes(video['minio_path'])
-                        if video_bytes:
-                            st.video(video_bytes, format="video/mp4")
+        st.markdown("### Explore indexed segments")
+
+        film_options = {f"{title} (ID: {vid_id})": vid_id for title, vid_id in processed.items()}
+        selected = st.selectbox("Select a film:", list(film_options.keys()), key="seg_select")
+        active_video_id = film_options[selected]
+
+        if st.button("Load segments", type="primary"):
+            with st.spinner("Loading..."):
+                r = requests.get(f"{API_URL}/videos/{active_video_id}/segments", timeout=30)
+            if r.status_code == 200:
+                st.session_state["segments"] = r.json()
+            else:
+                st.error("Could not load segments")
+
+        if "segments" in st.session_state:
+            segments = st.session_state["segments"]
+            st.write(f"**{len(segments)} segments** indexed")
+            st.write("")
+
+            for seg in segments:
+                with st.expander(f"⏱ {seg['start']}s – {seg['end']}s · {seg['text'][:80]}..."):
+                    col1, col2 = st.columns([1, 2])
+                    with col1:
+                        img = load_frame(seg.get("frame_path"))
+                        if img:
+                            st.image(img, caption=f"Frame @ {round((seg['start']+seg['end'])/2, 2)}s")
                         else:
-                            st.error("Could not load video file from storage.")
-                
-                st.divider()
+                            st.write("No frame")
+                    with col2:
+                        st.markdown(f"**🗣 Spoken:** {seg['text']}")
+                        if seg.get("scene_desc"):
+                            st.markdown(f"**👁 Visual:** {seg['scene_desc']}")
+                        st.markdown(f"**🕒** `{seg['start']}s → {seg['end']}s`")

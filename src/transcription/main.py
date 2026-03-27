@@ -250,6 +250,87 @@ def list_videos():
         } for r in rows
     ]
 
+@app.post("/process-url")
+async def process_url(payload: dict):
+    url = payload.get("url")
+    title = payload.get("title", "unknown")
+    if not url:
+        raise HTTPException(status_code=400, detail="url is required")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = os.path.join(tmpdir, "video.mp4")
+        try:
+            subprocess.run([
+                "yt-dlp",
+                "-f", "bestaudio+bestvideo/best",
+                "--merge-output-format", "mp4",
+                "-o", out_path,
+                url
+            ], check=True, capture_output=True)
+        except subprocess.CalledProcessError as e:
+            raise HTTPException(status_code=500, detail=f"Download failed: {e.stderr.decode()}")
+
+        # Reutilizar el pipeline normal
+        object_name = f"{uuid.uuid4()}.mp4"
+        minio_path = upload_file(out_path, object_name)
+
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "INSERT INTO videos (filename, minio_path, status) VALUES (%s, %s, 'transcribing') RETURNING id",
+                    (title, minio_path),
+                )
+                video_id = cur.fetchone()[0]
+            conn.commit()
+
+        segments = transcribe(out_path)
+
+        saved_segments = []
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                for seg in segments:
+                    mid = round((seg["start"] + seg["end"]) / 2, 2)
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp_frame:
+                        tmp_frame_path = tmp_frame.name
+
+                    frame_path = None
+                    scene_desc = None
+                    try:
+                        extract_frame(out_path, mid, tmp_frame_path)
+                        frame_path = upload_frame(tmp_frame_path, f"{uuid.uuid4()}.jpg")
+                        scene_desc = describe_frame(tmp_frame_path)
+                    except Exception as e:
+                        print(f"Frame/vision error at {mid}s: {e}")
+                    finally:
+                        if os.path.exists(tmp_frame_path):
+                            os.unlink(tmp_frame_path)
+
+                    cur.execute(
+                        """INSERT INTO segments (video_id, start_s, end_s, text, frame_path, scene_desc)
+                           VALUES (%s, %s, %s, %s, %s, %s) RETURNING id""",
+                        (video_id, seg["start"], seg["end"], seg["text"], frame_path, scene_desc),
+                    )
+                    segment_id = cur.fetchone()[0]
+                    saved_segments.append({
+                        "id": segment_id,
+                        "start": seg["start"],
+                        "end": seg["end"],
+                        "text": seg["text"],
+                        "scene_desc": scene_desc,
+                    })
+
+                cur.execute("UPDATE videos SET status='indexed' WHERE id=%s", (video_id,))
+            conn.commit()
+
+        model = index_segments(saved_segments, video_id)
+        index_hierarchical(saved_segments, video_id, model)
+
+        return JSONResponse({
+            "video_id": video_id,
+            "title": title,
+            "segments": len(saved_segments),
+        })
+
 @app.get("/health")
 def health():
     return {"status": "ok"}

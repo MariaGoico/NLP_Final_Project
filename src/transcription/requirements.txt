@@ -15,3 +15,4 @@ qdrant-client
 llama-cpp-python
 numpy
 scikit-learn
+yt-dlp
