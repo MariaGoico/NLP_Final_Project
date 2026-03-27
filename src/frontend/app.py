@@ -208,6 +208,8 @@ if "selected_film" not in st.session_state:
     st.session_state["selected_film"] = None
 if "custom_preview" not in st.session_state:
     st.session_state["custom_preview"] = None  # {youtube_id, title, description, url, needs_manual?}
+if "my_trailers" not in st.session_state:
+    st.session_state["my_trailers"] = []
 
 # ── Header ───────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -269,6 +271,35 @@ with tab_catalog:
                             st.error(f"Connection error: {e}")
 
     # ── Custom YouTube URL uploader ──────────────────────────────────────────
+
+    if st.session_state["my_trailers"]:
+        st.markdown("<br>### 🍿 My Trailers", unsafe_allow_html=True)
+        st.divider()
+        
+        my_list = st.session_state["my_trailers"]
+        COLUMNS_PER_ROW = 3
+        
+        for i in range(0, len(my_list), COLUMNS_PER_ROW):
+            row_cols = st.columns(COLUMNS_PER_ROW)
+            chunk = my_list[i : i + COLUMNS_PER_ROW]
+            
+            for j, film in enumerate(chunk):
+                with row_cols[j]:
+                    st.markdown(
+                        f'<iframe width="100%" height="200" src="https://www.youtube.com/embed/{film["youtube_id"]}" '
+                        f'frameborder="0" allowfullscreen></iframe>',
+                        unsafe_allow_html=True
+                    )
+                    st.markdown(f'<p class="film-title">{film["title"]}</p>', unsafe_allow_html=True)
+                    st.markdown(f'<p class="film-meta">{film["year"]} · {film["genre"]}</p>', unsafe_allow_html=True)
+                    st.markdown(f'<p class="film-desc">{film["description"]}</p>', unsafe_allow_html=True)
+                    st.write("")
+                    
+                    # Custom trailers are already processed, so we just show the green badge
+                    vid_id = st.session_state["processed_videos"].get(film["title"])
+                    st.markdown(f'<span class="processed-badge">✓ Indexed — ID {vid_id}</span>', unsafe_allow_html=True)
+                    st.write("")
+                    
     st.markdown("""
     <div class="upload-section">
         <p class="upload-section-title">➕ Add your own trailer</p>
@@ -377,6 +408,16 @@ with tab_catalog:
                                     if r.status_code == 200:
                                         data = r.json()
                                         st.session_state["processed_videos"][final_title.strip()] = data["video_id"]
+
+                                        st.session_state["my_trailers"].append({
+                                            "title": final_title.strip(),
+                                            "year": "Custom",
+                                            "genre": "User Added",
+                                            "description": final_desc.strip(),
+                                            "youtube_url": preview["url"],
+                                            "youtube_id": preview["youtube_id"]
+                                        })
+
                                         st.success(f"✅ {final_title} indexed! ({data['segments']} segments)")
                                         st.session_state["custom_preview"] = None
                                         st.rerun()
