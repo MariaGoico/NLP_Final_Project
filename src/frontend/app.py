@@ -39,6 +39,33 @@ FILMS = [
         "youtube_id": "VyHV0BRtdxo",
         "thumbnail": "https://img.youtube.com/vi/VyHV0BRtdxo/hqdefault.jpg",
     },
+    {
+        "title": "Dune: Part Two",
+        "year": 2024,
+        "genre": "Sci-Fi / Adventure",
+        "description": "Paul Atreides unites with Chani and the Fremen while on a warpath of revenge against the conspirators who destroyed his family.",
+        "youtube_url": "https://www.youtube.com/watch?v=Way9Dexny3w",
+        "youtube_id": "Way9Dexny3w",
+        "thumbnail": "https://img.youtube.com/vi/Way9Dexny3w/hqdefault.jpg",
+    },
+    {
+        "title": "Deadpool & Wolverine",
+        "year": 2024,
+        "genre": "Action / Comedy / Sci-Fi",
+        "description": "A weary Wolverine finds himself recovering from his injuries when he comes across a loudmouth Deadpool.",
+        "youtube_url": "https://www.youtube.com/watch?v=73_1biulkYk",
+        "youtube_id": "73_1biulkYk",
+        "thumbnail": "https://img.youtube.com/vi/73_1biulkYk/hqdefault.jpg",
+    },
+    {
+        "title": "A Quiet Place: Day One",
+        "year": 2024,
+        "genre": "Horror / Sci-Fi",
+        "description": "Experience the day the world went silent in this prequel following a woman named Sam as she tries to survive an invasion in New York City.",
+        "youtube_url": "https://www.youtube.com/watch?v=YPY7J-flzE8",
+        "youtube_id": "YPY7J-flzE8",
+        "thumbnail": "https://img.youtube.com/vi/YPY7J-flzE8/hqdefault.jpg",
+    },
 ]
 
 def get_minio():
@@ -158,7 +185,7 @@ with tab_catalog:
 
     cols = st.columns(3)
     for i, film in enumerate(FILMS):
-        with cols[i]:
+        with cols[i % 3]:
             is_processed = film["title"] in st.session_state["processed_videos"]
 
             # Thumbnail + badge
