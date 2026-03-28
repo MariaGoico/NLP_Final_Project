@@ -89,12 +89,12 @@ def load_frame(frame_path: str) -> Image.Image | None:
 def get_processed_videos() -> dict:
     """Devuelve dict title -> video_id de vídeos ya procesados."""
     try:
-        r = requests.get(f"{API_URL}/health", timeout=5)
-        if r.status_code != 200:
-            return {}
-    except Exception:
-        return {}
-    return st.session_state.get("processed_videos", {})
+        r = requests.get(f"{API_URL}/videos", timeout=5)
+        if r.status_code == 200:
+            return r.json() # Devuelve la lista desde el backend
+    except Exception as e:
+        print(f"Error fetching processed videos: {e}")
+    return []
 
 
 def extract_youtube_id(url: str) -> str | None:
@@ -200,8 +200,17 @@ st.markdown("""
 
 
 # ── Session state ────────────────────────────────────────────────────────────
-if "processed_videos" not in st.session_state:
-    st.session_state["processed_videos"] = {}
+if "video_data" not in st.session_state:
+    db_videos = get_processed_videos()
+    st.session_state["video_data"] = db_videos
+    
+    # Para el chat (necesita un diccionario Título -> ID)
+    st.session_state["processed_videos"] = {v["title"]: v["id"] for v in db_videos}
+    
+    # Filtramos para My Trailers (los que NO están en la lista fija FILMS)
+    catalog_titles = [f["title"] for f in FILMS]
+    st.session_state["my_trailers"] = [v for v in db_videos if v["title"] not in catalog_titles]
+
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 if "selected_film" not in st.session_state:
@@ -220,6 +229,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.divider()
+
 
 # ── Tabs ─────────────────────────────────────────────────────────────────────
 tab_catalog, tab_chat, tab_segments = st.tabs(["🎥 Catalog", "💬 Ask", "🎞️ Segments"])
@@ -257,13 +267,22 @@ with tab_catalog:
                         try:
                             r = requests.post(
                                 f"{API_URL}/process-url",
-                                json={"url": film["youtube_url"], "title": film["title"]},
+                                json={
+                                    "url": film["youtube_url"], 
+                                    "title": film["title"],
+                                    "description": film["description"],
+                                    "youtube_id": film["youtube_id"],
+                                    "year": str(film["year"]),
+                                    "genre": film["genre"]
+                                },
                                 timeout=600,
                             )
                             if r.status_code == 200:
                                 data = r.json()
                                 st.session_state["processed_videos"][film["title"]] = data["video_id"]
                                 st.success(f"✅ {film['title']} indexed! ({data['segments']} segments)")
+                                del st.session_state["video_data"] # (Vaciamos la cache para forzar que vuelva a consultar la BD en el rerun)
+                                st.session_state["custom_preview"] = None
                                 st.rerun()
                             else:
                                 st.error(f"Error: {r.text}")
@@ -273,7 +292,7 @@ with tab_catalog:
     # ── Custom YouTube URL uploader ──────────────────────────────────────────
 
     if st.session_state["my_trailers"]:
-        st.markdown("<br>### 🍿 My Trailers", unsafe_allow_html=True)
+        st.markdown("### 🍿 My Trailers")
         st.divider()
         
         my_list = st.session_state["my_trailers"]
@@ -402,7 +421,14 @@ with tab_catalog:
                                 try:
                                     r = requests.post(
                                         f"{API_URL}/process-url",
-                                        json={"url": preview["url"], "title": final_title.strip()},
+                                        json={
+                                            "url": preview["url"], 
+                                            "title": final_title.strip(),
+                                            "description": final_desc.strip(),
+                                            "youtube_id": preview["youtube_id"],
+                                            "year": "Custom",
+                                            "genre": "User Added"
+                                        },
                                         timeout=600,
                                     )
                                     if r.status_code == 200:

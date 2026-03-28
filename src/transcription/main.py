@@ -235,18 +235,36 @@ def query(payload: dict):
     }
 
 @app.get("/videos")
+# def list_videos():
+#     with get_conn() as conn:
+#         with conn.cursor() as cur:
+#             cur.execute("SELECT id, filename, minio_path, status, created_at FROM videos ORDER BY created_at DESC")
+#             rows = cur.fetchall()
+#     return [
+#         {
+#             "id": r[0], 
+#             "filename": r[1], 
+#             "minio_path": r[2], 
+#             "status": r[3], 
+#             "created_at": str(r[4])
+#         } for r in rows
+#     ]
 def list_videos():
     with get_conn() as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT id, filename, minio_path, status, created_at FROM videos ORDER BY created_at DESC")
+            # Seleccionamos filename (que es donde guardas el title) y el id
+            cur.execute("SELECT id, filename, youtube_url, youtube_id, description, release_year, genre FROM videos WHERE status = 'indexed'")
             rows = cur.fetchall()
+            
     return [
         {
             "id": r[0], 
-            "filename": r[1], 
-            "minio_path": r[2], 
-            "status": r[3], 
-            "created_at": str(r[4])
+            "title": r[1], 
+            "youtube_url": r[2], 
+            "youtube_id": r[3],
+            "description": r[4],
+            "year": r[5],
+            "genre": r[6]
         } for r in rows
     ]
 
@@ -254,6 +272,11 @@ def list_videos():
 async def process_url(payload: dict):
     url = payload.get("url")
     title = payload.get("title", "unknown")
+
+    description = payload.get("description", "")
+    youtube_id = payload.get("youtube_id", "")
+    year = payload.get("year", "2024")
+    genre = payload.get("genre", "Trailer")
     if not url:
         raise HTTPException(status_code=400, detail="url is required")
 
@@ -277,8 +300,10 @@ async def process_url(payload: dict):
         with get_conn() as conn:
             with conn.cursor() as cur:
                 cur.execute(
-                    "INSERT INTO videos (filename, minio_path, status) VALUES (%s, %s, 'transcribing') RETURNING id",
-                    (title, minio_path),
+                    """INSERT INTO videos 
+                       (filename, minio_path, status, youtube_url, youtube_id, description, release_year, genre) 
+                       VALUES (%s, %s, 'transcribing', %s, %s, %s, %s, %s) RETURNING id""",
+                    (title, minio_path, url, youtube_id, description, str(year), genre),
                 )
                 video_id = cur.fetchone()[0]
             conn.commit()

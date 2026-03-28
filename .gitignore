@@ -9,3 +9,4 @@ uploads
 models
 __pycache__
 data
+.env

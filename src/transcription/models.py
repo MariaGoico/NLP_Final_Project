@@ -6,7 +6,12 @@ CREATE TABLE IF NOT EXISTS videos (
     minio_path  TEXT NOT NULL,
     duration_s  FLOAT,
     status      TEXT DEFAULT 'pending',  -- pending | transcribed | indexed | error
-    created_at  TIMESTAMPTZ DEFAULT NOW()
+    created_at  TIMESTAMPTZ DEFAULT NOW(),
+    youtube_url TEXT,
+    youtube_id  TEXT,
+    description TEXT,
+    release_year TEXT,
+    genre       TEXT
 );
 
 CREATE TABLE IF NOT EXISTS segments (
