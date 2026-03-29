@@ -74,7 +74,7 @@
           "level": "T",
           "question": "What is Miranda Priestly's phone number shown in the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "Completely fabricated detail, does not exist"
@@ -130,7 +130,7 @@
           "level": "T",
           "question": "What is Elle's GPA score mentioned in the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "Specific GPA number is not clearly stated in the trailer"
@@ -140,7 +140,7 @@
           "level": "T",
           "question": "What is the name of Elle's dog?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "Bruiser's name is not mentioned in the trailer dialogue"
@@ -196,7 +196,7 @@
           "level": "T",
           "question": "What is the password to Dumbledore's office mentioned in the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "Completely fabricated detail, does not appear in any trailer"
@@ -206,7 +206,7 @@
           "level": "T",
           "question": "How many students are in Harry's class at Hogwarts according to the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "Specific numerical detail not stated in trailer"
@@ -270,7 +270,7 @@
           "level": "T",
           "question": "What is the exact name of the spice drug shown in the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "The word melange is not spoken clearly in the trailer"
@@ -280,7 +280,7 @@
           "level": "T",
           "question": "How many soldiers does Paul command according to the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "Specific number not stated in trailer"
@@ -336,7 +336,7 @@
           "level": "T",
           "question": "What is the name of the villain in the film according to the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "The main villain's name is not clearly stated in the trailer"
@@ -346,7 +346,7 @@
           "level": "T",
           "question": "How many times does Wolverine use his claws in the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "Exact count is impossible to extract from transcript or visual descriptions"
@@ -410,7 +410,7 @@
           "level": "T",
           "question": "What is the exact name of the vampire clan leader mentioned in the trailer?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "The trailer does not name any specific vampire clan leader"
@@ -420,7 +420,7 @@
           "level": "T",
           "question": "In what specific year does the trailer explicitly say the movie takes place?",
           "expected_answer": "I could not find that in the video.",
-          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "key_concepts": ["could not find"],
           "expected_level": "L1",
           "is_trap": true,
           "trap_reason": "The exact year is not spoken in the trailer dialogue"
