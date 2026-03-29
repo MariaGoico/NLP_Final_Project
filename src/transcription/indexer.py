@@ -5,7 +5,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance, PointStruct
 
 COLLECTION = "segments"
-VECTOR_SIZE = 384
+VECTOR_SIZE = 384  # Tamaño del vector para el modelo "all-MiniLM-L6-v2"
 
 _model = None
 
@@ -14,7 +14,7 @@ def get_model():
     global _model
     if _model is None:
         print("Loading sentence-transformers model...")
-        _model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
+        _model = SentenceTransformer("all-MiniLM-L6-v2")
         print("Sentence-transformers model loaded.")
     return _model
 

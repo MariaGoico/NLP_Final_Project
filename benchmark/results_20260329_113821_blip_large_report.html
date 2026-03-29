@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CineRAG Benchmark — blip_large</title>
+<style>
+  body { background:#0d0d1a; color:#e0e0e0; font-family:'Segoe UI',sans-serif; margin:0; padding:2rem; }
+  h1 { background:linear-gradient(135deg,#e50914,#ff6b35); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:2.2rem; margin-bottom:0.2rem; }
+  h2 { color:#e50914; margin-top:2rem; }
+  .meta { color:#888; font-size:0.85rem; margin-bottom:2rem; }
+  .cards { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .card { background:#1a1a2e; border-radius:12px; padding:1.2rem 1.8rem; min-width:140px; }
+  .card .val { font-size:2rem; font-weight:800; }
+  .card .lbl { color:#888; font-size:0.8rem; margin-top:0.2rem; }
+  table { border-collapse:collapse; width:100%; font-size:0.85rem; }
+  th { background:#1a1a2e; color:#e50914; padding:10px 12px; text-align:left; position:sticky; top:0; }
+  td { padding:8px 12px; border-bottom:1px solid #1a1a2e; vertical-align:top; }
+  tr:hover td { background:#1a1a2e88; }
+  .section { background:#111122; border-radius:12px; padding:1.5rem; margin-bottom:2rem; overflow-x:auto; }
+  .badge { background:#e50914; color:#fff; border-radius:20px; padding:2px 12px; font-size:0.75rem; font-weight:600; }
+</style>
+</head>
+<body>
+<h1>🎬 CineRAG Benchmark</h1>
+<div class="meta">
+  Label: <span class="badge">blip_large</span> &nbsp;|&nbsp;
+  Source: results_20260329_113821.json &nbsp;|&nbsp;
+  Generated: 2026-03-29 11:39
+</div>
+
+<div class="cards">
+  <div class="card"><div class="val" style="color:#1db954">0.499</div><div class="lbl">Avg Composite Score</div></div>
+  <div class="card"><div class="val" style="color:#3a86ff">0.636</div><div class="lbl">Avg Semantic Similarity</div></div>
+  <div class="card"><div class="val" style="color:#8338ec">0.423</div><div class="lbl">Avg Keyword Hit Rate</div></div>
+  <div class="card"><div class="val" style="color:#f5a623">0.378</div><div class="lbl">Level Accuracy</div></div>
+  <div class="card"><div class="val" style="color:#fb5607">0.636</div><div class="lbl">Trap Accuracy</div></div>
+  <div class="card"><div class="val" style="color:#aaa">2.628s</div><div class="lbl">Avg Latency</div></div>
+  <div class="card"><div class="val">45</div><div class="lbl">Questions Evaluated</div></div>
+  <div class="card"><div class="val" style="color:#e50914">0</div><div class="lbl">Skipped (not processed)</div></div>
+</div>
+
+<h2>📊 By Retrieval Level</h2>
+<div class="section">
+<table>
+  <thead><tr><th>Level</th><th>N</th><th>Keyword Hit Rate</th><th>Semantic Similarity</th><th>Composite Score</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>L1</b></td>
+      <td>9</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.604</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:67%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.671</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:68%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.688</span></td>
+    </tr>
+    <tr>
+      <td><b>L2</b></td>
+      <td>12</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:56%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.562</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:63%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.635</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:49%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.496</span></td>
+    </tr>
+    <tr>
+      <td><b>L3</b></td>
+      <td>13</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:52%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.527</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:56%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.567</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:43%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.437</span></td>
+    </tr>
+    <tr>
+      <td><b>T</b></td>
+      <td>11</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:69%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.691</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:42%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.422</span></td>
+    </tr></tbody>
+</table>
+</div>
+
+<h2>📋 All Questions</h2>
+<div class="section">
+<table>
+  <thead>
+    <tr>
+      <th>Level</th><th>Trailer</th><th>Question</th><th>Answer (preview)</th>
+      <th>Level Used</th><th>Keyword Hit</th><th>Semantic Sim</th><th>Composite</th><th>Latency</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">What is this trailer about?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The trailer is about Andy's job interview at a fashion magazine, where he is being asked to describe his personal style and how it relates t…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.6</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:48%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.489</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:43%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.436</span></td>
+      <td style="color:#aaa;font-size:0.8rem">20.97s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">Who is the main character and what is her goal?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The main character is Andy, and her goal is to get a job at the magazine "La Jure" in order to achieve success.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:25%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.25</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:67%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.671</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:36%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.368</span></td>
+      <td style="color:#aaa;font-size:0.8rem">4.183s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">What genre is this film?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The genre of this film is a satirical comedy-drama, specifically a commentary on the fashion industry and the pressures of success.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:79%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.79</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:71%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.716</span></td>
+      <td style="color:#aaa;font-size:0.8rem">3.72s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">What happens when the main character first arrives at the office?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">When the main character arrives at the office, she is sitting in a meeting with Andy, who is already there.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:75%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.75</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:72%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.729</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:59%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.592</span></td>
+      <td style="color:#aaa;font-size:0.8rem">2.959s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">How does Miranda Priestly treat her assistant?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">Miranda Priestly is a demanding and exacting boss, known for her high standards and strict expectations. She expects perfection from everyon…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:84%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.847</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:73%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.739</span></td>
+      <td style="color:#aaa;font-size:0.8rem">2.988s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">What does Miranda say when she enters the office?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">Miranda is not present in the video context.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:33%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.333</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:43%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.433</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.506</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.874s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">Is there a scene where the assistant is shown running or rushing?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">There is no scene where the assistant (Andy) runs or rushes. The visual of a man and woman shaking hands in a room at 29.58s suggests that t…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:66%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.665</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:86%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.866</span></td>
+      <td style="color:#aaa;font-size:0.8rem">3.255s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">The Devil Wears Prada</td>
+      <td style="max-width:260px;font-size:0.82rem">What is Miranda Priestly's phone number shown in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.6</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.587s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Legally Blonde</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the main premise of this trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The main premise of this trailer is that the woman in the video is trying to convince her boyfriend (who she's interested in running for off…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:13%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.134</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:5%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.054</span></td>
+      <td style="color:#aaa;font-size:0.8rem">6.986s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Legally Blonde</td>
+      <td style="max-width:260px;font-size:0.82rem">Who is Elle Woods and what motivates her?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">Elle Woods is a character from the 2004 comedy film "Legally Blonde." She is a fashion merchandising major at Harvard Law School and a soror…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:79%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.793</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:71%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.717</span></td>
+      <td style="color:#aaa;font-size:0.8rem">3.832s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Legally Blonde</td>
+      <td style="max-width:260px;font-size:0.82rem">How do people at Harvard react to Elle?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">People at Harvard are likely to react with a mix of surprise, amusement, and possibly even concern. The video context suggests that Elle is …</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:75%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.75</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:68%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.684</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:57%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.574</span></td>
+      <td style="color:#aaa;font-size:0.8rem">6.668s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Legally Blonde</td>
+      <td style="max-width:260px;font-size:0.82rem">Are there any courtroom scenes in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">There are no courtroom scenes in the provided video context.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:33%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.333</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:70%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.702</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:41%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.414</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.715s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Legally Blonde</td>
+      <td style="max-width:260px;font-size:0.82rem">What does Elle say when she first arrives at Harvard?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">Elle says, "Welcome to Harvard."…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:75%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.75</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:81%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.813</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:82%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.825</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.545s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Legally Blonde</td>
+      <td style="max-width:260px;font-size:0.82rem">What is Elle's GPA score mentioned in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.6</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.515s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Legally Blonde</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the name of Elle's dog?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The dog's name is Malibu Barbie.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:11%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.118</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:24%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.247</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.703s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Harry Potter and the S</td>
+      <td style="max-width:260px;font-size:0.82rem">What is this trailer about?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The trailer is about Harry Potter's acceptance to Hogwarts School of Witchcraft and Wizardry, where he will be learning magic.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:55%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.552</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:62%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.621</span></td>
+      <td style="color:#aaa;font-size:0.8rem">2.495s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Harry Potter and the S</td>
+      <td style="max-width:260px;font-size:0.82rem">What kind of world is shown in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The world shown in the trailer appears to be a dark, foreboding, and mysterious one. The image of the group of people in robes and hats walk…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:75%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.75</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:56%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.568</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:52%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.527</span></td>
+      <td style="color:#aaa;font-size:0.8rem">2.178s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Harry Potter and the S</td>
+      <td style="max-width:260px;font-size:0.82rem">What does Hogwarts look like in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:-3%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">-0.036</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:-1%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">-0.014</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.422s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Harry Potter and the S</td>
+      <td style="max-width:260px;font-size:0.82rem">Are there any flying scenes in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">There are no flying scenes in the trailer.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:66%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.667</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:81%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.812</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:59%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.592</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.083s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Harry Potter and the S</td>
+      <td style="max-width:260px;font-size:0.82rem">What does Hagrid say to Harry when they first meet?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">When Harry first meets Hagrid, he says: "You're a wizard, Harry. I'm a what?"…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:92%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.923</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:96%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.969</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.858s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Harry Potter and the S</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the password to Dumbledore's office mentioned in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.6</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.565s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Harry Potter and the S</td>
+      <td style="max-width:260px;font-size:0.82rem">How many students are in Harry's class at Hogwarts according to the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">There are 7 students in Harry's class according to the trailer.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:8%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.08</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:23%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.232</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.11s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the main story of this trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The main story of this trailer appears to be about a mysterious and ominous plot involving the "Treaties", which seem to be some sort of sec…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:20%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.2</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:24%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.24</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:17%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.176</span></td>
+      <td style="color:#aaa;font-size:0.8rem">3.722s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the setting of this film?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The setting of this film is the House of Treaties, which appears to be a mysterious and ominous location.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:42%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.425</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:17%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.17</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.623s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">What does Paul Atreides do with the Fremen in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">In the trailer, Paul Atreides is shown to be training a group of Fremen warriors.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.5</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:64%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.647</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:65%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.659</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.089s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">Are there sandworm scenes in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:34%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.346</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:13%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.138</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.358s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">What does Paul say about his path or destiny in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">Paul says that he will never let you go.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.5</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:49%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.495</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:59%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.598</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.118s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">Who is Chani and how does she appear in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">Chani is a character in the video, but I could not find any information about her in the context.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:25%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.25</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:66%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.667</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:36%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.367</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.011s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the exact name of the spice drug shown in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">video_summary_shortcut</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:40%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.4</span></td>
+      <td style="color:#aaa;font-size:0.8rem">0.644s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Dune: Part Two</td>
+      <td style="max-width:260px;font-size:0.82rem">How many soldiers does Paul command according to the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:40%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.4</span></td>
+      <td style="color:#aaa;font-size:0.8rem">0.67s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Deadpool & Wolverine</td>
+      <td style="max-width:260px;font-size:0.82rem">What is this trailer about?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The trailer is about Deadpool, a superhero with regenerative abilities and a sarcastic personality.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.5</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:79%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.792</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:51%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.517</span></td>
+      <td style="color:#aaa;font-size:0.8rem">4.002s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Deadpool & Wolverine</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the tone of this trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The tone of this trailer is sarcastic, angry, and somewhat dismissive. The speaker seems to be frustrated with the person they're addressing…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:75%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.75</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:75%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.757</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.603</span></td>
+      <td style="color:#aaa;font-size:0.8rem">4.91s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Deadpool & Wolverine</td>
+      <td style="max-width:260px;font-size:0.82rem">How do Deadpool and Wolverine interact in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">In the full video context, Deadpool and Wolverine do not interact in the trailer.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:75%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.75</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:65%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.657</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:56%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.563</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.631s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Deadpool & Wolverine</td>
+      <td style="max-width:260px;font-size:0.82rem">What kind of action scenes are shown in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The action scenes in the trailer are slow motion, with a focus on close-ups and dramatic poses.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.5</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:82%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.828</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:53%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.531</span></td>
+      <td style="color:#aaa;font-size:0.8rem">2.034s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Deadpool & Wolverine</td>
+      <td style="max-width:260px;font-size:0.82rem">What does Deadpool say when he first meets or addresses Wolverine?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">When Deadpool first meets Wolverine, he addresses him as "upcy-daisy".…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.5</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:68%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.689</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:67%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.676</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.593s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Deadpool & Wolverine</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the name of the villain in the film according to the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.6</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.427s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Deadpool & Wolverine</td>
+      <td style="max-width:260px;font-size:0.82rem">How many times does Wolverine use his claws in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">Wolverine uses his claws 3 times in the trailer.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:18%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.185</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:27%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.274</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.545s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">What is this trailer about?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The trailer appears to be about a man who is being manipulated by someone (the "devil") and is trying to keep him from leaving. The man in t…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:40%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.4</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:34%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.347</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:29%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.299</span></td>
+      <td style="color:#aaa;font-size:0.8rem">3.076s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#ff006e;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L3</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">What kind of threat do the main characters face?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The main characters face a threat of demonic possession.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:40%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.4</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:80%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.807</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:48%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.483</span></td>
+      <td style="color:#aaa;font-size:0.8rem">0.983s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">How is the music or the party scene depicted in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The music or party scene in the trailer is depicted as a dark and ominous atmosphere, with a sense of foreboding. The visuals show a woman (…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:66%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.664</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:66%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.666</span></td>
+      <td style="color:#aaa;font-size:0.8rem">2.358s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#8338ec;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L2</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">Are there scenes of the brothers fighting back?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">There are scenes of the brothers fighting back in [71.32s - 72.54s]…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.5</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:74%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.745</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:49%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.498</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.338s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">What does one of the twins say about believing in the supernatural?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The twins are talking about the supernatural, but they don't say anything specific.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:50%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.5</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:68%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.681</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:67%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.672</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.574s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#3a86ff;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">L1</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">What warning is given about 'dancing with the devil'?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The warning is about "dancing with the devil".…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.6</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:67%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.673</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:70%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">0.709</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.377s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">What is the exact name of the vampire clan leader mentioned in the trailer?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">I could not find that in the video.…</td>
+      <td style="font-size:0.78rem;color:#aaa">hierarchical_full</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#1db954;width:100%;height:100%;border-radius:4px"></div></div> <span style="color:#1db954;font-weight:600">1.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#f5a623;width:60%;height:100%;border-radius:4px"></div></div> <span style="color:#f5a623;font-weight:600">0.6</span></td>
+      <td style="color:#aaa;font-size:0.8rem">1.08s</td>
+    </tr>
+    <tr>
+      <td><span style="background:#fb5607;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700">T</span> <span style="background:#fb5607;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem">TRAP</span></td>
+      <td style="color:#aaa;font-size:0.8rem">Sinners</td>
+      <td style="max-width:260px;font-size:0.82rem">In what specific year does the trailer explicitly say the movie takes place?</td>
+      <td style="max-width:260px;font-size:0.78rem;color:#ccc;font-style:italic">The trailer does not explicitly state the year in which the movie takes place.…</td>
+      <td style="font-size:0.78rem;color:#aaa">video_summary_shortcut</td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:0%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.0</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:22%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.223</span></td>
+      <td><div style="background:#222;border-radius:4px;height:14px;width:100px;display:inline-block;vertical-align:middle"><div style="background:#e50914;width:8%;height:100%;border-radius:4px"></div></div> <span style="color:#e50914;font-weight:600">0.089</span></td>
+      <td style="color:#aaa;font-size:0.8rem">0.882s</td>
+    </tr></tbody>
+</table>
+</div>
+
+</body>
+</html>

@@ -21,7 +21,7 @@ def transcribe(video_path: str) -> list[dict]:
     model = get_model()
     result = model.transcribe(
         video_path,
-        language=None,          # autodetect (español, inglés, etc.)
+        language="en",          # English
         word_timestamps=True,   # timestamps a nivel de palabra
         verbose=False,
         fp16=False,            # ← forzar FP32 siempre, evita nan en logits
