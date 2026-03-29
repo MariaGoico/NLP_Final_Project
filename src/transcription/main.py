@@ -1,5 +1,7 @@
 # src/transcription/main.py
 import os, tempfile, uuid, subprocess
+import torch
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
 from .db import init_db, get_conn
@@ -16,6 +18,12 @@ app = FastAPI(title="Transcription Service")
 @app.on_event("startup")
 def startup():
     init_db()
+    from .indexer import get_model as get_embedder
+    from .llm import get_model as get_llm
+    print("Precargando modelos...")
+    get_embedder()
+    get_llm()
+    print("Modelos precargados — servicio listo.")
 
 
 def extract_frame(video_path: str, timestamp: float, output_path: str):
@@ -198,7 +206,7 @@ def query(payload: dict):
             limit=4,
             query_filter=segment_filter,
             with_payload=True,
-            score_threshold=0.15,
+            score_threshold=0.20,
         ).points
         segment_hits = sorted(segment_hits, key=lambda r: r.score, reverse=True)[:4]
 
@@ -222,6 +230,15 @@ def query(payload: dict):
 
     response = llm_answer(question, context_segments)
 
+    # Determinar nivel real usado
+    if not segment_hits and not window_hits and global_context:
+        level_used = "video_summary_shortcut"  # solo usó nivel 3
+    elif not segment_hits and window_hits:
+        level_used = "hierarchical"            # llegó hasta nivel 2
+    else:
+        level_used = "hierarchical_full"       # llegó hasta nivel 1
+
+
     return {
         "question": question,
         "answer": response,
@@ -230,7 +247,7 @@ def query(payload: dict):
             "videos": len(video_hits),
             "windows": len(window_hits),
             "segments": len(segment_hits),
-            "level_used": "hierarchical_full",
+            "level_used": level_used,
         }
     }
 
@@ -285,6 +302,7 @@ async def process_url(payload: dict):
         try:
             subprocess.run([
                 "yt-dlp",
+                "--js-runtimes", "node",
                 "-f", "bestaudio+bestvideo/best",
                 "--merge-output-format", "mp4",
                 "-o", out_path,
@@ -349,6 +367,10 @@ async def process_url(payload: dict):
 
         model = index_segments(saved_segments, video_id)
         index_hierarchical(saved_segments, video_id, model)
+
+        # Limpia la memoria VRAM residual
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
 
         return JSONResponse({
             "video_id": video_id,

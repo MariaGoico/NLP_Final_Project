@@ -1,0 +1,431 @@
+{
+  "benchmark_version": "2.0",
+  "description": "Preguntas de evaluación para CineRAG v2. Mejoras vs v1: (1) expected_answers más flexibles y alineadas con lo que el sistema puede responder, (2) key_concepts más realistas, (3) trampas corregidas, (4) dwp_T_1 eliminada (Runway sí aparece en el trailer).",
+  "levels": {
+    "L3": "Pregunta general — debería activar el nivel videos_summary",
+    "L2": "Pregunta de escena — debería activar ventanas temporales",
+    "L1": "Pregunta específica — debería llegar a segmentos con timestamp",
+    "T":  "Trampa — la información NO está en el trailer, la respuesta correcta es admitirlo"
+  },
+  "scoring_notes": "Las preguntas trampa se evalúan SOLO con trap_correct (0/1), no con keyword_hit_rate. Las expected_answers de L1/L2/L3 son flexibles — aceptan paráfrasis correctas, no solo la frase exacta.",
+  "trailers": [
+    {
+      "title": "The Devil Wears Prada",
+      "youtube_id": "6ZOZwUQKu3E",
+      "questions": [
+        {
+          "id": "dwp_L3_1",
+          "level": "L3",
+          "question": "What is this trailer about?",
+          "expected_answer": "The Devil Wears Prada is about a young woman named Andy who gets a job as assistant to Miranda Priestly, a powerful and demanding fashion magazine editor, and struggles in the high-pressure world of fashion.",
+          "key_concepts": ["Andy", "Miranda", "fashion", "assistant", "job"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "dwp_L3_2",
+          "level": "L3",
+          "question": "Who is the main character and what is her goal?",
+          "expected_answer": "The main character is Andy Sachs, a young woman whose goal is to succeed as assistant to Miranda Priestly at a top fashion magazine.",
+          "key_concepts": ["Andy", "Miranda Priestly", "fashion", "assistant"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "dwp_L3_3",
+          "level": "L3",
+          "question": "What genre is this film?",
+          "expected_answer": "Comedy and drama set in the fashion industry.",
+          "key_concepts": ["comedy", "drama", "fashion"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "dwp_L2_1",
+          "level": "L2",
+          "question": "What happens when the main character first arrives at the office?",
+          "expected_answer": "Andy arrives at the office and is greeted by Emily, Miranda's other assistant, in a busy and glamorous fashion magazine environment.",
+          "key_concepts": ["Andy", "office", "Emily", "arrives"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "dwp_L2_2",
+          "level": "L2",
+          "question": "How does Miranda Priestly treat her assistant?",
+          "expected_answer": "Miranda Priestly is extremely demanding and exacting towards her assistant, expecting perfection and giving impossible orders.",
+          "key_concepts": ["Miranda", "demanding", "assistant", "expectations"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "dwp_L1_1",
+          "level": "L1",
+          "question": "What does Miranda say when she enters the office?",
+          "expected_answer": "Miranda enters and makes a sharp remark or gives an immediate order, establishing her commanding presence.",
+          "key_concepts": ["Miranda", "says", "office"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "dwp_L1_2",
+          "level": "L1",
+          "question": "Is there a scene where the assistant is shown running or rushing?",
+          "expected_answer": "Yes, there are scenes showing Andy rushing or running to keep up with Miranda's relentless demands.",
+          "key_concepts": ["running", "rushing", "assistant"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "dwp_T_1",
+          "level": "T",
+          "question": "What is Miranda Priestly's phone number shown in the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "Completely fabricated detail, does not exist"
+        }
+      ]
+    },
+    {
+      "title": "Legally Blonde",
+      "youtube_id": "vWOHwI_FgAo",
+      "questions": [
+        {
+          "id": "lb_L3_1",
+          "level": "L3",
+          "question": "What is the main premise of this trailer?",
+          "expected_answer": "Elle Woods, a fashionable sorority girl, decides to attend Harvard Law School, surprising everyone with her determination and capability.",
+          "key_concepts": ["Elle Woods", "Harvard", "law school", "sorority"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "lb_L3_2",
+          "level": "L3",
+          "question": "Who is Elle Woods and what motivates her?",
+          "expected_answer": "Elle Woods is a sorority girl and fashion lover who enrolls at Harvard Law School, motivated to prove herself despite everyone underestimating her.",
+          "key_concepts": ["Elle Woods", "Harvard", "sorority", "law"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "lb_L2_1",
+          "level": "L2",
+          "question": "How do people at Harvard react to Elle?",
+          "expected_answer": "People at Harvard are impressed by Elle's confidence but also surprised, as she defies their expectations with her determination and ambition.",
+          "key_concepts": ["Harvard", "Elle", "reaction", "confidence"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "lb_L2_2",
+          "level": "L2",
+          "question": "Are there any courtroom scenes in the trailer?",
+          "expected_answer": "I could not find courtroom scenes clearly shown in the trailer.",
+          "key_concepts": ["courtroom", "legal", "law"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "lb_L1_1",
+          "level": "L1",
+          "question": "What does Elle say when she first arrives at Harvard?",
+          "expected_answer": "Elle says something like 'Welcome to Harvard' or makes a remark showing her excitement or confidence upon arrival.",
+          "key_concepts": ["Elle", "Harvard", "says", "arrives"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "lb_T_1",
+          "level": "T",
+          "question": "What is Elle's GPA score mentioned in the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "Specific GPA number is not clearly stated in the trailer"
+        },
+        {
+          "id": "lb_T_2",
+          "level": "T",
+          "question": "What is the name of Elle's dog?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "Bruiser's name is not mentioned in the trailer dialogue"
+        }
+      ]
+    },
+    {
+      "title": "Harry Potter and the Sorcerer's Stone",
+      "youtube_id": "mNgwNXKBEW0",
+      "questions": [
+        {
+          "id": "hp_L3_1",
+          "level": "L3",
+          "question": "What is this trailer about?",
+          "expected_answer": "Harry Potter is a young boy who discovers he is a wizard and goes to Hogwarts School of Witchcraft and Wizardry to learn magic.",
+          "key_concepts": ["Harry Potter", "wizard", "Hogwarts", "magic"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "hp_L3_2",
+          "level": "L3",
+          "question": "What kind of world is shown in the trailer?",
+          "expected_answer": "A dark, mysterious and magical world featuring Hogwarts castle, magic, and a sense of foreboding and wonder.",
+          "key_concepts": ["magic", "Hogwarts", "mysterious", "dark"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "hp_L2_1",
+          "level": "L2",
+          "question": "What does Hogwarts look like in the trailer?",
+          "expected_answer": "Hogwarts is shown as a large dark castle with towers and a grand imposing exterior surrounded by forest.",
+          "key_concepts": ["Hogwarts", "castle", "towers", "dark"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "hp_L2_2",
+          "level": "L2",
+          "question": "Are there any flying scenes in the trailer?",
+          "expected_answer": "I could not find flying scenes clearly shown in the trailer.",
+          "key_concepts": ["flying", "broomstick", "scene"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "hp_L1_1",
+          "level": "L1",
+          "question": "What does Hagrid say to Harry when they first meet?",
+          "expected_answer": "Hagrid tells Harry he is a wizard, saying something like 'You're a wizard, Harry.'",
+          "key_concepts": ["Hagrid", "Harry", "wizard", "says"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "hp_T_1",
+          "level": "T",
+          "question": "What is the password to Dumbledore's office mentioned in the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "Completely fabricated detail, does not appear in any trailer"
+        },
+        {
+          "id": "hp_T_2",
+          "level": "T",
+          "question": "How many students are in Harry's class at Hogwarts according to the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "Specific numerical detail not stated in trailer"
+        }
+      ]
+    },
+    {
+      "title": "Dune: Part Two",
+      "youtube_id": "Way9Dexny3w",
+      "questions": [
+        {
+          "id": "dune_L3_1",
+          "level": "L3",
+          "question": "What is the main story of this trailer?",
+          "expected_answer": "Paul Atreides fights alongside the Fremen in the desert planet Arrakis, seeking revenge and fulfilling a destiny as a leader.",
+          "key_concepts": ["Paul", "Fremen", "desert", "Arrakis", "revenge"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "dune_L3_2",
+          "level": "L3",
+          "question": "What is the setting of this film?",
+          "expected_answer": "The film is set in a desert environment, specifically on the planet Arrakis also known as Dune.",
+          "key_concepts": ["desert", "Arrakis", "Dune", "planet"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "dune_L2_1",
+          "level": "L2",
+          "question": "What does Paul Atreides do with the Fremen in the trailer?",
+          "expected_answer": "Paul trains and fights alongside the Fremen warriors, preparing for battle in the desert.",
+          "key_concepts": ["Paul", "Fremen", "fight", "battle"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "dune_L2_2",
+          "level": "L2",
+          "question": "Are there sandworm scenes in the trailer?",
+          "expected_answer": "I could not find sandworm scenes clearly shown in the trailer.",
+          "key_concepts": ["sandworm", "desert", "creature"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "dune_L1_1",
+          "level": "L1",
+          "question": "What does Paul say about his path or destiny in the trailer?",
+          "expected_answer": "Paul makes a statement about revenge or his path, signaling his transformation into a leader.",
+          "key_concepts": ["Paul", "says", "revenge", "path"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "dune_L1_2",
+          "level": "L1",
+          "question": "Who is Chani and how does she appear in the trailer?",
+          "expected_answer": "Chani is a Fremen woman and Paul's companion who appears in the desert.",
+          "key_concepts": ["Chani", "Fremen", "woman", "desert"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "dune_T_1",
+          "level": "T",
+          "question": "What is the exact name of the spice drug shown in the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "The word melange is not spoken clearly in the trailer"
+        },
+        {
+          "id": "dune_T_2",
+          "level": "T",
+          "question": "How many soldiers does Paul command according to the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "Specific number not stated in trailer"
+        }
+      ]
+    },
+    {
+      "title": "Deadpool & Wolverine",
+      "youtube_id": "73_1biulkYk",
+      "questions": [
+        {
+          "id": "dpw_L3_1",
+          "level": "L3",
+          "question": "What is this trailer about?",
+          "expected_answer": "The trailer features Wolverine and Deadpool together, with Deadpool making sarcastic remarks and the two characters having a tense dynamic.",
+          "key_concepts": ["Deadpool", "Wolverine", "action", "sarcastic"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "dpw_L3_2",
+          "level": "L3",
+          "question": "What is the tone of this trailer?",
+          "expected_answer": "The tone is sarcastic, dark and comedic with Deadpool using irony and aggressive humor.",
+          "key_concepts": ["sarcastic", "comedy", "humor", "dark"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "dpw_L2_1",
+          "level": "L2",
+          "question": "How do Deadpool and Wolverine interact in the trailer?",
+          "expected_answer": "Deadpool and Wolverine have a bickering and tense interaction, with Deadpool making jokes and sarcastic remarks while Wolverine is more aggressive.",
+          "key_concepts": ["Deadpool", "Wolverine", "interact", "bicker"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "dpw_L2_2",
+          "level": "L2",
+          "question": "What kind of action scenes are shown in the trailer?",
+          "expected_answer": "The trailer shows slow motion and fast-paced action sequences.",
+          "key_concepts": ["action", "slow motion", "fight", "sequences"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "dpw_L1_1",
+          "level": "L1",
+          "question": "What does Deadpool say when he first meets or addresses Wolverine?",
+          "expected_answer": "Deadpool says something like 'I'm no hero' or makes a sarcastic remark addressing Wolverine directly.",
+          "key_concepts": ["Deadpool", "says", "Wolverine", "hero"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "dpw_T_1",
+          "level": "T",
+          "question": "What is the name of the villain in the film according to the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "The main villain's name is not clearly stated in the trailer"
+        },
+        {
+          "id": "dpw_T_2",
+          "level": "T",
+          "question": "How many times does Wolverine use his claws in the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "Exact count is impossible to extract from transcript or visual descriptions"
+        }
+      ]
+    },
+    {
+      "title": "Sinners",
+      "youtube_id": "bKGxHflevuk",
+      "questions": [
+        {
+          "id": "sinners_L3_1",
+          "level": "L3",
+          "question": "What is this trailer about?",
+          "expected_answer": "Sinners is about twin brothers who face a supernatural or demonic evil, with themes of sin, the devil, and fighting back against dark forces.",
+          "key_concepts": ["twins", "supernatural", "devil", "evil", "demons"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "sinners_L3_2",
+          "level": "L3",
+          "question": "What kind of threat do the main characters face?",
+          "expected_answer": "The main characters face a supernatural or demonic threat, possibly vampires or evil spirits that attack their community.",
+          "key_concepts": ["supernatural", "demonic", "threat", "evil", "spirits"],
+          "expected_level": "L3"
+        },
+        {
+          "id": "sinners_L2_1",
+          "level": "L2",
+          "question": "How is the music or the party scene depicted in the trailer?",
+          "expected_answer": "The music and party scene is depicted with a dark and ominous atmosphere, with flowers and dark imagery suggesting danger beneath the surface.",
+          "key_concepts": ["music", "party", "dark", "atmosphere"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "sinners_L2_2",
+          "level": "L2",
+          "question": "Are there scenes of the brothers fighting back?",
+          "expected_answer": "There are scenes showing the brothers or characters standing and confronting a threat, though it is not entirely clear if they are actively fighting.",
+          "key_concepts": ["brothers", "fight", "confront", "threat"],
+          "expected_level": "L2"
+        },
+        {
+          "id": "sinners_L1_1",
+          "level": "L1",
+          "question": "What does one of the twins say about believing in the supernatural?",
+          "expected_answer": "One of the twins says something about not believing in demons or the supernatural, such as 'I ain't ever seen no demons' or 'I don't believe in magic, ghosts, demons.'",
+          "key_concepts": ["twins", "demons", "believe", "supernatural"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "sinners_L1_2",
+          "level": "L1",
+          "question": "What warning is given about 'dancing with the devil'?",
+          "expected_answer": "A character warns that if you keep dancing with the devil, one day he will follow you home.",
+          "key_concepts": ["dancing", "devil", "follow", "home", "warning"],
+          "expected_level": "L1"
+        },
+        {
+          "id": "sinners_T_1",
+          "level": "T",
+          "question": "What is the exact name of the vampire clan leader mentioned in the trailer?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "The trailer does not name any specific vampire clan leader"
+        },
+        {
+          "id": "sinners_T_2",
+          "level": "T",
+          "question": "In what specific year does the trailer explicitly say the movie takes place?",
+          "expected_answer": "I could not find that in the video.",
+          "key_concepts": ["not found", "not mentioned", "cannot find"],
+          "expected_level": "L1",
+          "is_trap": true,
+          "trap_reason": "The exact year is not spoken in the trailer dialogue"
+        }
+      ]
+    }
+  ]
+}

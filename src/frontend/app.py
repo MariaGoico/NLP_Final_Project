@@ -36,9 +36,9 @@ FILMS = [
         "year": 2001,
         "genre": "Fantasy / Adventure",
         "description": "An orphaned boy discovers he's a wizard and begins his education at Hogwarts School of Witchcraft and Wizardry.",
-        "youtube_url": "https://www.youtube.com/watch?v=VyHV0BRtdxo",
-        "youtube_id": "VyHV0BRtdxo",
-        "thumbnail": "https://img.youtube.com/vi/VyHV0BRtdxo/hqdefault.jpg",
+        "youtube_url": "https://www.youtube.com/watch?v=mNgwNXKBEW0",
+        "youtube_id": "mNgwNXKBEW0",
+        "thumbnail": "https://img.youtube.com/vi/mNgwNXKBEW0/hqdefault.jpg",
     },
     {
         "title": "Dune: Part Two",
@@ -59,13 +59,13 @@ FILMS = [
         "thumbnail": "https://img.youtube.com/vi/73_1biulkYk/hqdefault.jpg",
     },
     {
-        "title": "A Quiet Place: Day One",
-        "year": 2024,
-        "genre": "Horror / Sci-Fi",
-        "description": "Experience the day the world went silent in this prequel following a woman named Sam as she tries to survive an invasion in New York City.",
-        "youtube_url": "https://www.youtube.com/watch?v=YPY7J-flzE8",
-        "youtube_id": "YPY7J-flzE8",
-        "thumbnail": "https://img.youtube.com/vi/YPY7J-flzE8/hqdefault.jpg",
+        "title": "Sinners",
+        "year": 2025,
+        "genre": "Horror / Action / Drama",
+        "description": "Trying to leave their troubled lives behind, twin brothers return to their hometown to start again, only to discover that an even greater evil is waiting to welcome them back.",
+        "youtube_url": "https://www.youtube.com/watch?v=bKGxHflevuk",
+        "youtube_id": "bKGxHflevuk",
+        "thumbnail": "https://img.youtube.com/vi/bKGxHflevuk/hqdefault.jpg",
     },
 ]
 

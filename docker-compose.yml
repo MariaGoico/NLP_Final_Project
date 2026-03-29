@@ -12,7 +12,12 @@ services:
       POSTGRES_PASSWORD: password
     ports: ["5432:5432"]
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data  # <--- AÑADE ESTA LÍNEA
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d videorag"] 
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   minio:
     image: minio/minio
@@ -24,7 +29,7 @@ services:
     image: alpine/curl
     volumes:
       - ./models:/models
-    # CAMBIO 1: Usamos '|' para mantener los saltos de línea en el script
+    # Usamos '|' para mantener los saltos de línea en el script
     command: >
       sh -c "
         apk add --no-cache curl &&
@@ -55,10 +60,10 @@ services:
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
       HF_TOKEN: ${HF_TOKEN}
-    # CAMBIO 3: Obligamos a que espere a que la descarga termine completamente
+    # Obligamos a que espere a que la descarga termine completamente
     depends_on:
       postgres:
-        condition: service_started
+        condition: service_healthy
       minio:
         condition: service_started
       model-downloader:
@@ -70,10 +75,18 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
   frontend:
     build: ./src/frontend
     ports: ["8501:8501"]
+    volumes:
+      - ./src/frontend:/app
     environment:
       API_URL: http://transcription:8001
       MINIO_ENDPOINT: minio:9000
@@ -81,7 +94,8 @@ services:
       MINIO_SECRET_KEY: minioadmin
       MINIO_EXTERNAL_URL: http://localhost:9000
     depends_on:
-      - transcription
+      transcription:
+        condition: service_healthy # ← espera al healthcheck
 
 volumes:
   whisper-cache:

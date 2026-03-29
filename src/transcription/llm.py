@@ -11,7 +11,8 @@ def get_model():
         _model = Llama(
             model_path="/models/llama-3.2-1b-instruct-q4_k_m.gguf",
             n_ctx=2048,
-            n_threads=4,
+            n_threads=4,     
+            n_gpu_layers=35,   # ← todo en GPU
             verbose=False,
         )
         print("LLaMA model loaded.")
@@ -32,6 +33,7 @@ Rules:
 - Do not invent information not present in the context.<|eot_id|>
 <|start_header_id|>user<|end_header_id|>
 """
+
 
     if global_ctx:
         prompt += f"Full video context:\n{global_ctx[0]['text']}\n\n"

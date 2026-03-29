@@ -1,3 +1,7 @@
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch
+torchvision
+torchaudio
 fastapi
 uvicorn[standard]
 openai-whisper
@@ -6,9 +10,6 @@ minio
 python-multipart
 numpy
 moviepy
-transformers
-torch
-torchvision
 Pillow
 sentence-transformers
 qdrant-client
@@ -16,3 +17,4 @@ llama-cpp-python
 numpy
 scikit-learn
 yt-dlp
+transformers

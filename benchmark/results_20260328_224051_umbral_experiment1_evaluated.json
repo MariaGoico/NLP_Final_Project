@@ -1,0 +1,2041 @@
+{
+  "label": "umbral_experiment1",
+  "source_results": "results_20260328_224051.json",
+  "eval_timestamp": "2026-03-28T22:41:17.020736",
+  "summary": {
+    "n_questions": 45,
+    "n_evaluated": 45,
+    "n_skipped": 0,
+    "avg_keyword_hit_rate": 0.304,
+    "avg_semantic_similarity": 0.581,
+    "avg_composite_score": 0.43,
+    "avg_latency_s": 1.576,
+    "level_accuracy": 0.378,
+    "trap_accuracy": 0.727
+  },
+  "by_level": {
+    "L1": {
+      "n": 9,
+      "avg_keyword_hit_rate": 0.604,
+      "avg_semantic_similarity": 0.661,
+      "avg_composite_score": 0.617
+    },
+    "L2": {
+      "n": 12,
+      "avg_keyword_hit_rate": 0.451,
+      "avg_semantic_similarity": 0.544,
+      "avg_composite_score": 0.482
+    },
+    "L3": {
+      "n": 13,
+      "avg_keyword_hit_rate": 0.218,
+      "avg_semantic_similarity": 0.402,
+      "avg_composite_score": 0.263
+    },
+    "T": {
+      "n": 11,
+      "avg_keyword_hit_rate": 0.0,
+      "avg_semantic_similarity": 0.768,
+      "avg_composite_score": 0.416
+    }
+  },
+  "results": [
+    {
+      "id": "dwp_L3_1",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "L3",
+      "question": "What is this trailer about?",
+      "expected_answer": "The Devil Wears Prada is about a young woman named Andy who gets a job as assistant to Miranda Priestly, a powerful and demanding fashion magazine editor, and struggles in the high-pressure world of fashion.",
+      "key_concepts": [
+        "Andy",
+        "Miranda",
+        "fashion",
+        "assistant",
+        "job"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 1.212,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.041,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.016
+      }
+    },
+    {
+      "id": "dwp_L3_2",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "L3",
+      "question": "Who is the main character and what is her goal?",
+      "expected_answer": "The main character is Andy Sachs, a young woman whose goal is to succeed as assistant to Miranda Priestly at a top fashion magazine.",
+      "key_concepts": [
+        "Andy",
+        "Miranda Priestly",
+        "fashion",
+        "assistant"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The main character is Andy, and her goal is to get a job at the fashion magazine.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 3.174,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.5,
+        "semantic_similarity": 0.734,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.494
+      }
+    },
+    {
+      "id": "dwp_L3_3",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "L3",
+      "question": "What genre is this film?",
+      "expected_answer": "Comedy and drama set in the fashion industry.",
+      "key_concepts": [
+        "comedy",
+        "drama",
+        "fashion"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The genre of this film is a comedy.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.615,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.333,
+        "semantic_similarity": 0.667,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.4
+      }
+    },
+    {
+      "id": "dwp_L2_1",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "L2",
+      "question": "What happens when the main character first arrives at the office?",
+      "expected_answer": "Andy arrives at the office and is greeted by Emily, Miranda's other assistant, in a busy and glamorous fashion magazine environment.",
+      "key_concepts": [
+        "Andy",
+        "office",
+        "Emily",
+        "arrives"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "When the main character, Andy, arrives at the office, he is standing in an empty room with a woman, who introduces herself as Emily.",
+      "sources": [
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a man and woman standing in an office",
+          "score": 0.431,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a man and woman standing in an office",
+          "score": 0.431,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a man and woman standing in an office",
+          "score": 0.431,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a man and woman standing in an office",
+          "score": 0.431,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.753,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 1.0,
+        "semantic_similarity": 0.72,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.688
+      }
+    },
+    {
+      "id": "dwp_L2_2",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "L2",
+      "question": "How does Miranda Priestly treat her assistant?",
+      "expected_answer": "Miranda Priestly is extremely demanding and exacting towards her assistant, expecting perfection and giving impossible orders.",
+      "key_concepts": [
+        "Miranda",
+        "demanding",
+        "assistant",
+        "expectations"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "Miranda Priestly is known for being extremely demanding, critical, and exacting. She expects perfection from her staff, often to the point of being ruthless.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 1.318,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.5,
+        "semantic_similarity": 0.865,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.746
+      }
+    },
+    {
+      "id": "dwp_L1_1",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "L1",
+      "question": "What does Miranda say when she enters the office?",
+      "expected_answer": "Miranda enters and makes a sharp remark or gives an immediate order, establishing her commanding presence.",
+      "key_concepts": [
+        "Miranda",
+        "says",
+        "office"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "When Miranda enters the office, she says: \"Hello, Andy. I'm so glad you're here.\"",
+      "sources": [
+        {
+          "start": 28.62,
+          "end": 29.2,
+          "text": "A phone interview?",
+          "scene_desc": "a woman is reading a piece of paper",
+          "score": 0.437,
+          "level": "segment"
+        },
+        {
+          "start": 29.58,
+          "end": 29.98,
+          "text": "Is it a phone interview?",
+          "scene_desc": "a man and woman standing in an office",
+          "score": 0.436,
+          "level": "segment"
+        },
+        {
+          "start": 81.3,
+          "end": 82.4,
+          "text": "I'm leaving right now.",
+          "scene_desc": "a woman talking on a cell phone",
+          "score": 0.359,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 3,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.488,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 1.0,
+        "semantic_similarity": 0.637,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.855
+      }
+    },
+    {
+      "id": "dwp_L1_2",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "L1",
+      "question": "Is there a scene where the assistant is shown running or rushing?",
+      "expected_answer": "Yes, there are scenes showing Andy rushing or running to keep up with Miranda's relentless demands.",
+      "key_concepts": [
+        "running",
+        "rushing",
+        "assistant"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "There is no scene where the assistant (Andy) runs or rushes.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.837,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.333,
+        "semantic_similarity": 0.616,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.38
+      }
+    },
+    {
+      "id": "dwp_T_1",
+      "trailer": "The Devil Wears Prada",
+      "video_id": 9,
+      "level": "T",
+      "question": "What is Miranda Priestly's phone number shown in the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "Completely fabricated detail, does not exist",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.664,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 0,
+        "trap_correct": 1,
+        "composite_score": 0.4
+      }
+    },
+    {
+      "id": "lb_L3_1",
+      "trailer": "Legally Blonde",
+      "video_id": 2,
+      "level": "L3",
+      "question": "What is the main premise of this trailer?",
+      "expected_answer": "Elle Woods, a fashionable sorority girl, decides to attend Harvard Law School, surprising everyone with her determination and capability.",
+      "key_concepts": [
+        "Elle Woods",
+        "Harvard",
+        "law school",
+        "sorority"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 3,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.673,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": -0.004,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": -0.002
+      }
+    },
+    {
+      "id": "lb_L3_2",
+      "trailer": "Legally Blonde",
+      "video_id": 2,
+      "level": "L3",
+      "question": "Who is Elle Woods and what motivates her?",
+      "expected_answer": "Elle Woods is a sorority girl and fashion lover who enrolls at Harvard Law School, motivated to prove herself despite everyone underestimating her.",
+      "key_concepts": [
+        "Elle Woods",
+        "Harvard",
+        "sorority",
+        "law"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "Elle Woods is a character from the 2003 comedy film \"Legally Blonde.\" She is a fashion merchandising major at Harvard Law School, who decides to attend law school despite her lack of academic preparation and her personal life.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 4.89,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.75,
+        "semantic_similarity": 0.814,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.626
+      }
+    },
+    {
+      "id": "lb_L2_1",
+      "trailer": "Legally Blonde",
+      "video_id": 2,
+      "level": "L2",
+      "question": "How do people at Harvard react to Elle?",
+      "expected_answer": "People at Harvard are impressed by Elle's confidence but also surprised, as she defies their expectations with her determination and ambition.",
+      "key_concepts": [
+        "Harvard",
+        "Elle",
+        "reaction",
+        "confidence"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [
+        {
+          "start": 26.94,
+          "end": 30.24,
+          "text": "Going to Harvard is the only way I'm going to get the love of my life back.",
+          "scene_desc": "harry potter and hermile",
+          "score": 0.462,
+          "level": "segment"
+        },
+        {
+          "start": 30.44,
+          "end": 31.76,
+          "text": "For my admissions essay.",
+          "scene_desc": "a girl in a pink dress sitting at a table",
+          "score": 0.379,
+          "level": "segment"
+        },
+        {
+          "start": 50.34,
+          "end": 51.08,
+          "text": "Welcome to Harvard.",
+          "scene_desc": "a man sitting in front of a television",
+          "score": 0.424,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 3,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.397,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.029,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.012
+      }
+    },
+    {
+      "id": "lb_L2_2",
+      "trailer": "Legally Blonde",
+      "video_id": 2,
+      "level": "L2",
+      "question": "Are there any courtroom scenes in the trailer?",
+      "expected_answer": "I could not find courtroom scenes clearly shown in the trailer.",
+      "key_concepts": [
+        "courtroom",
+        "legal",
+        "law"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "There is a courtroom scene in the video, but it's not explicitly shown. The camera pans to a woman (L. BEEP! BEEP! BEEP!) standing in front of a judge's bench with a microphone, and then cuts to a shot of her talking about wanting to be a senator and Harvard Law School.",
+      "sources": [
+        {
+          "start": 127.84,
+          "end": 130.88,
+          "text": "Oh, look how cute there's like a judge in everything.",
+          "scene_desc": "a woman in a courtroom with a microphone",
+          "score": 0.433,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 1,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 2.564,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.667,
+        "semantic_similarity": 0.568,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.494
+      }
+    },
+    {
+      "id": "lb_L1_1",
+      "trailer": "Legally Blonde",
+      "video_id": 2,
+      "level": "L1",
+      "question": "What does Elle say when she first arrives at Harvard?",
+      "expected_answer": "Elle says something like 'Welcome to Harvard' or makes a remark showing her excitement or confidence upon arrival.",
+      "key_concepts": [
+        "Elle",
+        "Harvard",
+        "says",
+        "arrives"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "Elle doesn't say anything in the video.",
+      "sources": [
+        {
+          "start": 26.94,
+          "end": 30.24,
+          "text": "Going to Harvard is the only way I'm going to get the love of my life back.",
+          "scene_desc": "harry potter and hermile",
+          "score": 0.473,
+          "level": "segment"
+        },
+        {
+          "start": 30.44,
+          "end": 31.76,
+          "text": "For my admissions essay.",
+          "scene_desc": "a girl in a pink dress sitting at a table",
+          "score": 0.44,
+          "level": "segment"
+        },
+        {
+          "start": 50.34,
+          "end": 51.08,
+          "text": "Welcome to Harvard.",
+          "scene_desc": "a man sitting in front of a television",
+          "score": 0.438,
+          "level": "segment"
+        },
+        {
+          "start": 99.5,
+          "end": 100.98,
+          "text": "Do you think she just woke up one morning and said,",
+          "scene_desc": "a woman with blonde hair and a smile",
+          "score": 0.433,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.522,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.25,
+        "semantic_similarity": 0.421,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.468
+      }
+    },
+    {
+      "id": "lb_T_1",
+      "trailer": "Legally Blonde",
+      "video_id": 2,
+      "level": "T",
+      "question": "What is Elle's GPA score mentioned in the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "Specific GPA number is not clearly stated in the trailer",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [
+        {
+          "start": 30.44,
+          "end": 31.76,
+          "text": "For my admissions essay.",
+          "scene_desc": "a girl in a pink dress sitting at a table",
+          "score": 0.394,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 1,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 0.881,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 1,
+        "trap_correct": 1,
+        "composite_score": 0.6
+      }
+    },
+    {
+      "id": "lb_T_2",
+      "trailer": "Legally Blonde",
+      "video_id": 2,
+      "level": "T",
+      "question": "What is the name of Elle's dog?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "Bruiser's name is not mentioned in the trailer dialogue",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.662,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 0,
+        "trap_correct": 1,
+        "composite_score": 0.4
+      }
+    },
+    {
+      "id": "hp_L3_1",
+      "trailer": "Harry Potter and the Sorcerer's Stone",
+      "video_id": 3,
+      "level": "L3",
+      "question": "What is this trailer about?",
+      "expected_answer": "Harry Potter is a young boy who discovers he is a wizard and goes to Hogwarts School of Witchcraft and Wizardry to learn magic.",
+      "key_concepts": [
+        "Harry Potter",
+        "wizard",
+        "Hogwarts",
+        "magic"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 0.584,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": -0.111,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": -0.044
+      }
+    },
+    {
+      "id": "hp_L3_2",
+      "trailer": "Harry Potter and the Sorcerer's Stone",
+      "video_id": 3,
+      "level": "L3",
+      "question": "What kind of world is shown in the trailer?",
+      "expected_answer": "A dark, mysterious and magical world featuring Hogwarts castle, magic, and a sense of foreboding and wonder.",
+      "key_concepts": [
+        "magic",
+        "Hogwarts",
+        "mysterious",
+        "dark"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The trailer shows a post-apocalyptic world with ruins of buildings, abandoned vehicles, and debris scattered everywhere.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.961,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.188,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.075
+      }
+    },
+    {
+      "id": "hp_L2_1",
+      "trailer": "Harry Potter and the Sorcerer's Stone",
+      "video_id": 3,
+      "level": "L2",
+      "question": "What does Hogwarts look like in the trailer?",
+      "expected_answer": "Hogwarts is shown as a large dark castle with towers and a grand imposing exterior surrounded by forest.",
+      "key_concepts": [
+        "Hogwarts",
+        "castle",
+        "towers",
+        "dark"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.573,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.573,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.573,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.573,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 2.835,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": -0.036,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": -0.014
+      }
+    },
+    {
+      "id": "hp_L2_2",
+      "trailer": "Harry Potter and the Sorcerer's Stone",
+      "video_id": 3,
+      "level": "L2",
+      "question": "Are there any flying scenes in the trailer?",
+      "expected_answer": "I could not find flying scenes clearly shown in the trailer.",
+      "key_concepts": [
+        "flying",
+        "broomstick",
+        "scene"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "There are no flying scenes in the trailer.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.652,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.667,
+        "semantic_similarity": 0.812,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.792
+      }
+    },
+    {
+      "id": "hp_L1_1",
+      "trailer": "Harry Potter and the Sorcerer's Stone",
+      "video_id": 3,
+      "level": "L1",
+      "question": "What does Hagrid say to Harry when they first meet?",
+      "expected_answer": "Hagrid tells Harry he is a wizard, saying something like 'You're a wizard, Harry.'",
+      "key_concepts": [
+        "Hagrid",
+        "Harry",
+        "wizard",
+        "says"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "When Harry first meets Hagrid, he says: \"I'm a wizard, I'm a what?\"",
+      "sources": [
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.622,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.622,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.622,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.622,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 3.181,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 1.0,
+        "semantic_similarity": 0.918,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.967
+      }
+    },
+    {
+      "id": "hp_T_1",
+      "trailer": "Harry Potter and the Sorcerer's Stone",
+      "video_id": 3,
+      "level": "T",
+      "question": "What is the password to Dumbledore's office mentioned in the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "Completely fabricated detail, does not appear in any trailer",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.397,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.397,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.397,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.397,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 0.728,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 1,
+        "trap_correct": 1,
+        "composite_score": 0.6
+      }
+    },
+    {
+      "id": "hp_T_2",
+      "trailer": "Harry Potter and the Sorcerer's Stone",
+      "video_id": 3,
+      "level": "T",
+      "question": "How many students are in Harry's class at Hogwarts according to the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "Specific numerical detail not stated in trailer",
+      "status": "ok",
+      "answer": "There are 70 students in Harry's class at Hogwarts according to the trailer.",
+      "sources": [
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.386,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.386,
+          "level": "segment"
+        },
+        {
+          "start": 29.98,
+          "end": 29.98,
+          "text": "",
+          "scene_desc": "a scene from the harry potters movie",
+          "score": 0.386,
+          "level": "segment"
+        },
+        {
+          "start": 62.04,
+          "end": 63.72,
+          "text": "Do you really have to...",
+          "scene_desc": "harry and hermik in harry ' s school",
+          "score": 0.484,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.144,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.044,
+        "level_correct": 1,
+        "trap_correct": 0,
+        "composite_score": 0.218
+      }
+    },
+    {
+      "id": "dune_L3_1",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "L3",
+      "question": "What is the main story of this trailer?",
+      "expected_answer": "Paul Atreides fights alongside the Fremen in the desert planet Arrakis, seeking revenge and fulfilling a destiny as a leader.",
+      "key_concepts": [
+        "Paul",
+        "Fremen",
+        "desert",
+        "Arrakis",
+        "revenge"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The main story of the trailer appears to be about a mysterious and ominous plot involving \"Treaties\", which seem to refer to some sort of secret agreement or pact. The narrator is hinting at a dark and potentially deadly situation, with references to diving into the depths (implying danger) and being pursued by someone who will stop at nothing to get revenge.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 3.535,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.2,
+        "semantic_similarity": 0.239,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.176
+      }
+    },
+    {
+      "id": "dune_L3_2",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "L3",
+      "question": "What is the setting of this film?",
+      "expected_answer": "The film is set in a desert environment, specifically on the planet Arrakis also known as Dune.",
+      "key_concepts": [
+        "desert",
+        "Arrakis",
+        "Dune",
+        "planet"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The setting of this film is the House of Treaties.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.829,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.383,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.153
+      }
+    },
+    {
+      "id": "dune_L2_1",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "L2",
+      "question": "What does Paul Atreides do with the Fremen in the trailer?",
+      "expected_answer": "Paul trains and fights alongside the Fremen warriors, preparing for battle in the desert.",
+      "key_concepts": [
+        "Paul",
+        "Fremen",
+        "fight",
+        "battle"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "In the trailer, Paul Atreides is shown to be training a group of Fremen warriors.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "video_summary_shortcut"
+      },
+      "latency_s": 0.968,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.5,
+        "semantic_similarity": 0.647,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.459
+      }
+    },
+    {
+      "id": "dune_L2_2",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "L2",
+      "question": "Are there sandworm scenes in the trailer?",
+      "expected_answer": "I could not find sandworm scenes clearly shown in the trailer.",
+      "key_concepts": [
+        "sandworm",
+        "desert",
+        "creature"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "There are no sandworm scenes in the trailer.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.728,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.333,
+        "semantic_similarity": 0.852,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.674
+      }
+    },
+    {
+      "id": "dune_L1_1",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "L1",
+      "question": "What does Paul say about his path or destiny in the trailer?",
+      "expected_answer": "Paul makes a statement about revenge or his path, signaling his transformation into a leader.",
+      "key_concepts": [
+        "Paul",
+        "says",
+        "revenge",
+        "path"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "In the trailer, Paul says \"I'll never let you go. I'll never let you go.\"",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "video_summary_shortcut"
+      },
+      "latency_s": 1.029,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.5,
+        "semantic_similarity": 0.485,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.394
+      }
+    },
+    {
+      "id": "dune_L1_2",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "L1",
+      "question": "Who is Chani and how does she appear in the trailer?",
+      "expected_answer": "Chani is a Fremen woman and Paul's companion who appears in the desert.",
+      "key_concepts": [
+        "Chani",
+        "Fremen",
+        "woman",
+        "desert"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "Chani is a character in the video, but I could not find any information about her in the context.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "video_summary_shortcut"
+      },
+      "latency_s": 1.005,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.25,
+        "semantic_similarity": 0.667,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.367
+      }
+    },
+    {
+      "id": "dune_T_1",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "T",
+      "question": "What is the exact name of the spice drug shown in the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "The word melange is not spoken clearly in the trailer",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 0.67,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 1,
+        "trap_correct": 1,
+        "composite_score": 0.6
+      }
+    },
+    {
+      "id": "dune_T_2",
+      "trailer": "Dune: Part Two",
+      "video_id": 4,
+      "level": "T",
+      "question": "How many soldiers does Paul command according to the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "Specific number not stated in trailer",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "video_summary_shortcut"
+      },
+      "latency_s": 1.601,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 0,
+        "trap_correct": 1,
+        "composite_score": 0.4
+      }
+    },
+    {
+      "id": "dpw_L3_1",
+      "trailer": "Deadpool & Wolverine",
+      "video_id": 5,
+      "level": "L3",
+      "question": "What is this trailer about?",
+      "expected_answer": "The trailer features Wolverine and Deadpool together, with Deadpool making sarcastic remarks and the two characters having a tense dynamic.",
+      "key_concepts": [
+        "Deadpool",
+        "Wolverine",
+        "action",
+        "sarcastic"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The trailer is about a character (likely Luke Skywalker) who is talking about his feelings of frustration and anger towards someone, possibly Darth Vader or another character.",
+      "sources": [
+        {
+          "start": 111.8,
+          "end": 113.32,
+          "text": "This is what I'm talking about.",
+          "scene_desc": "star wars the rise of skywalker - official trailer",
+          "score": 0.478,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 3,
+        "segments": 1,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 3.506,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.514,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.206
+      }
+    },
+    {
+      "id": "dpw_L3_2",
+      "trailer": "Deadpool & Wolverine",
+      "video_id": 5,
+      "level": "L3",
+      "question": "What is the tone of this trailer?",
+      "expected_answer": "The tone is sarcastic, dark and comedic with Deadpool using irony and aggressive humor.",
+      "key_concepts": [
+        "sarcastic",
+        "comedy",
+        "humor",
+        "dark"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The tone of this trailer is sarcastic, angry, and somewhat bitter. The speaker is expressing frustration with someone they perceive as being uncooperative or dismissive, using strong language to convey their emotions.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 1.567,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.25,
+        "semantic_similarity": 0.543,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.317
+      }
+    },
+    {
+      "id": "dpw_L2_1",
+      "trailer": "Deadpool & Wolverine",
+      "video_id": 5,
+      "level": "L2",
+      "question": "How do Deadpool and Wolverine interact in the trailer?",
+      "expected_answer": "Deadpool and Wolverine have a bickering and tense interaction, with Deadpool making jokes and sarcastic remarks while Wolverine is more aggressive.",
+      "key_concepts": [
+        "Deadpool",
+        "Wolverine",
+        "interact",
+        "bicker"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "Deadpool and Wolverine interact in the trailer by having Deadpool say \"I'm no hero\" while looking at a man with a helmet on his head, which is implied to be Wolverine.",
+      "sources": [
+        {
+          "start": 10.34,
+          "end": 11.04,
+          "text": "I peanut.",
+          "scene_desc": "the wolverine trailer is here",
+          "score": 0.518,
+          "level": "segment"
+        },
+        {
+          "start": 49.54,
+          "end": 50.38,
+          "text": "Come again.",
+          "scene_desc": "hugh in wolverine",
+          "score": 0.497,
+          "level": "segment"
+        },
+        {
+          "start": 51.36,
+          "end": 54.5,
+          "text": "This Wolverine let down his entire world.",
+          "scene_desc": "a man with a helmet on his head",
+          "score": 0.455,
+          "level": "segment"
+        },
+        {
+          "start": 82.64,
+          "end": 83.1,
+          "text": "I'm no hero.",
+          "scene_desc": "the wolverine trailer is here",
+          "score": 0.526,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 2.116,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.75,
+        "semantic_similarity": 0.645,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.558
+      }
+    },
+    {
+      "id": "dpw_L2_2",
+      "trailer": "Deadpool & Wolverine",
+      "video_id": 5,
+      "level": "L2",
+      "question": "What kind of action scenes are shown in the trailer?",
+      "expected_answer": "The trailer shows slow motion and fast-paced action sequences.",
+      "key_concepts": [
+        "action",
+        "slow motion",
+        "fight",
+        "sequences"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The action scenes in the trailer are slow-motion, fast-paced sequences featuring Deadpool.",
+      "sources": [
+        {
+          "start": 62.84,
+          "end": 64.92,
+          "text": "Or should we wait for a third act flashback?",
+          "scene_desc": "the flash in the flash",
+          "score": 0.378,
+          "level": "segment"
+        },
+        {
+          "start": 111.8,
+          "end": 113.32,
+          "text": "This is what I'm talking about.",
+          "scene_desc": "star wars the rise of skywalker - official trailer",
+          "score": 0.449,
+          "level": "segment"
+        },
+        {
+          "start": 115.78,
+          "end": 118.1,
+          "text": "Big slow motion action sequence.",
+          "scene_desc": "deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool",
+          "score": 0.429,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 4,
+        "segments": 3,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.497,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.5,
+        "semantic_similarity": 0.762,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.505
+      }
+    },
+    {
+      "id": "dpw_L1_1",
+      "trailer": "Deadpool & Wolverine",
+      "video_id": 5,
+      "level": "L1",
+      "question": "What does Deadpool say when he first meets or addresses Wolverine?",
+      "expected_answer": "Deadpool says something like 'I'm no hero' or makes a sarcastic remark addressing Wolverine directly.",
+      "key_concepts": [
+        "Deadpool",
+        "says",
+        "Wolverine",
+        "hero"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "When Deadpool first meets Wolverine, he addresses him as \"You're not welcome here. You're not welcome anywhere.\"",
+      "sources": [
+        {
+          "start": 10.34,
+          "end": 11.04,
+          "text": "I peanut.",
+          "scene_desc": "the wolverine trailer is here",
+          "score": 0.457,
+          "level": "segment"
+        },
+        {
+          "start": 49.54,
+          "end": 50.38,
+          "text": "Come again.",
+          "scene_desc": "hugh in wolverine",
+          "score": 0.567,
+          "level": "segment"
+        },
+        {
+          "start": 51.36,
+          "end": 54.5,
+          "text": "This Wolverine let down his entire world.",
+          "scene_desc": "a man with a helmet on his head",
+          "score": 0.48,
+          "level": "segment"
+        },
+        {
+          "start": 77.9,
+          "end": 79.3,
+          "text": "But you do.",
+          "scene_desc": "deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool deadpool",
+          "score": 0.454,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 4.313,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.5,
+        "semantic_similarity": 0.733,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.693
+      }
+    },
+    {
+      "id": "dpw_T_1",
+      "trailer": "Deadpool & Wolverine",
+      "video_id": 5,
+      "level": "T",
+      "question": "What is the name of the villain in the film according to the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "The main villain's name is not clearly stated in the trailer",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [
+        {
+          "start": 82.64,
+          "end": 83.1,
+          "text": "I'm no hero.",
+          "scene_desc": "the wolverine trailer is here",
+          "score": 0.409,
+          "level": "segment"
+        },
+        {
+          "start": 111.8,
+          "end": 113.32,
+          "text": "This is what I'm talking about.",
+          "scene_desc": "star wars the rise of skywalker - official trailer",
+          "score": 0.434,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 0,
+        "windows": 4,
+        "segments": 2,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.029,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 1,
+        "trap_correct": 1,
+        "composite_score": 0.6
+      }
+    },
+    {
+      "id": "dpw_T_2",
+      "trailer": "Deadpool & Wolverine",
+      "video_id": 5,
+      "level": "T",
+      "question": "How many times does Wolverine use his claws in the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "Exact count is impossible to extract from transcript or visual descriptions",
+      "status": "ok",
+      "answer": "Wolverine uses his claws 3 times in the trailer.",
+      "sources": [
+        {
+          "start": 10.34,
+          "end": 11.04,
+          "text": "I peanut.",
+          "scene_desc": "the wolverine trailer is here",
+          "score": 0.508,
+          "level": "segment"
+        },
+        {
+          "start": 49.54,
+          "end": 50.38,
+          "text": "Come again.",
+          "scene_desc": "hugh in wolverine",
+          "score": 0.52,
+          "level": "segment"
+        },
+        {
+          "start": 51.36,
+          "end": 54.5,
+          "text": "This Wolverine let down his entire world.",
+          "scene_desc": "a man with a helmet on his head",
+          "score": 0.487,
+          "level": "segment"
+        },
+        {
+          "start": 82.64,
+          "end": 83.1,
+          "text": "I'm no hero.",
+          "scene_desc": "the wolverine trailer is here",
+          "score": 0.432,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 4,
+        "segments": 4,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 3.802,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.185,
+        "level_correct": 1,
+        "trap_correct": 0,
+        "composite_score": 0.274
+      }
+    },
+    {
+      "id": "sinners_L3_1",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "L3",
+      "question": "What is this trailer about?",
+      "expected_answer": "Sinners is about twin brothers who face a supernatural or demonic evil, with themes of sin, the devil, and fighting back against dark forces.",
+      "key_concepts": [
+        "twins",
+        "supernatural",
+        "devil",
+        "evil",
+        "demons"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The trailer is about a man who claims to have seen supernatural entities, specifically demons and ghosts, while driving with his friend. He warns them to be careful because they might encounter these entities.",
+      "sources": [
+        {
+          "start": 48.7,
+          "end": 50.36,
+          "text": "What are the things that I've seen?",
+          "scene_desc": "a man in a yellow shirt is standing in front of a truck",
+          "score": 0.364,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 1,
+        "segments": 1,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 2.243,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.4,
+        "semantic_similarity": 0.405,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.322
+      }
+    },
+    {
+      "id": "sinners_L3_2",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "L3",
+      "question": "What kind of threat do the main characters face?",
+      "expected_answer": "The main characters face a supernatural or demonic threat, possibly vampires or evil spirits that attack their community.",
+      "key_concepts": [
+        "supernatural",
+        "demonic",
+        "threat",
+        "evil",
+        "spirits"
+      ],
+      "expected_level": "L3",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The main characters face a threat of demonic possession.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "video_summary_shortcut"
+      },
+      "latency_s": 0.727,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.4,
+        "semantic_similarity": 0.807,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.683
+      }
+    },
+    {
+      "id": "sinners_L2_1",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "L2",
+      "question": "How is the music or the party scene depicted in the trailer?",
+      "expected_answer": "The music and party scene is depicted with a dark and ominous atmosphere, with flowers and dark imagery suggesting danger beneath the surface.",
+      "key_concepts": [
+        "music",
+        "party",
+        "dark",
+        "atmosphere"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The music and party scene in the trailer is energetic, upbeat, and features a mix of electronic dance music (EDM) with other genres like hip-hop and pop. The visuals are vibrant and colorful, with flashing lights, pulsating colors, and dynamic camera movements.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 1,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 1.886,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.5,
+        "semantic_similarity": 0.465,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.586
+      }
+    },
+    {
+      "id": "sinners_L2_2",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "L2",
+      "question": "Are there scenes of the brothers fighting back?",
+      "expected_answer": "There are scenes showing the brothers or characters standing and confronting a threat, though it is not entirely clear if they are actively fighting.",
+      "key_concepts": [
+        "brothers",
+        "fight",
+        "confront",
+        "threat"
+      ],
+      "expected_level": "L2",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.646,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.204,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.282
+      }
+    },
+    {
+      "id": "sinners_L1_1",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "L1",
+      "question": "What does one of the twins say about believing in the supernatural?",
+      "expected_answer": "One of the twins says something about not believing in demons or the supernatural, such as 'I ain't ever seen no demons' or 'I don't believe in magic, ghosts, demons.'",
+      "key_concepts": [
+        "twins",
+        "demons",
+        "believe",
+        "supernatural"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The twins are referring to the idea that they believe in supernatural entities, specifically demons and ghosts.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 0,
+        "level_used": "hierarchical"
+      },
+      "latency_s": 0.937,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 1.0,
+        "semantic_similarity": 0.787,
+        "level_correct": 0,
+        "trap_correct": null,
+        "composite_score": 0.715
+      }
+    },
+    {
+      "id": "sinners_L1_2",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "L1",
+      "question": "What warning is given about 'dancing with the devil'?",
+      "expected_answer": "A character warns that if you keep dancing with the devil, one day he will follow you home.",
+      "key_concepts": [
+        "dancing",
+        "devil",
+        "follow",
+        "home",
+        "warning"
+      ],
+      "expected_level": "L1",
+      "is_trap": false,
+      "trap_reason": null,
+      "status": "ok",
+      "answer": "The warning is about being careful and not to be \"dancing with the devil\".",
+      "sources": [
+        {
+          "start": 88.24,
+          "end": 90.08,
+          "text": "You keep dancing with the devil.",
+          "scene_desc": "a black background with a white and red flower",
+          "score": 0.656,
+          "level": "segment"
+        }
+      ],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 2,
+        "segments": 1,
+        "level_used": "hierarchical_full"
+      },
+      "latency_s": 1.074,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.6,
+        "semantic_similarity": 0.683,
+        "level_correct": 1,
+        "trap_correct": null,
+        "composite_score": 0.713
+      }
+    },
+    {
+      "id": "sinners_T_1",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "T",
+      "question": "What is the exact name of the vampire clan leader mentioned in the trailer?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "The trailer does not name any specific vampire clan leader",
+      "status": "ok",
+      "answer": "I could not find that in the video.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "video_summary_shortcut"
+      },
+      "latency_s": 0.676,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 1.0,
+        "level_correct": 0,
+        "trap_correct": 1,
+        "composite_score": 0.4
+      }
+    },
+    {
+      "id": "sinners_T_2",
+      "trailer": "Sinners",
+      "video_id": 6,
+      "level": "T",
+      "question": "In what specific year does the trailer explicitly say the movie takes place?",
+      "expected_answer": "I could not find that in the video.",
+      "key_concepts": [
+        "not found",
+        "not mentioned",
+        "cannot find"
+      ],
+      "expected_level": "L1",
+      "is_trap": true,
+      "trap_reason": "The exact year is not spoken in the trailer dialogue",
+      "status": "ok",
+      "answer": "The trailer does not explicitly state the year in which the movie takes place.",
+      "sources": [],
+      "retrieval_levels_used": {
+        "videos": 1,
+        "windows": 0,
+        "segments": 0,
+        "level_used": "video_summary_shortcut"
+      },
+      "latency_s": 0.8,
+      "error": null,
+      "metrics": {
+        "keyword_hit_rate": 0.0,
+        "semantic_similarity": 0.223,
+        "level_correct": 0,
+        "trap_correct": 0,
+        "composite_score": 0.089
+      }
+    }
+  ]
+}

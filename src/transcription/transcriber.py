@@ -24,6 +24,7 @@ def transcribe(video_path: str) -> list[dict]:
         language=None,          # autodetect (español, inglés, etc.)
         word_timestamps=True,   # timestamps a nivel de palabra
         verbose=False,
+        fp16=False,            # ← forzar FP32 siempre, evita nan en logits
     )
     segments = []
     for seg in result["segments"]:
