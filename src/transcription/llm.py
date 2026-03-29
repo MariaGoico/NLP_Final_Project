@@ -22,17 +22,29 @@ def answer(question: str, context_segments: list[dict]) -> str:
     global_ctx = [s for s in context_segments if s.get("level") == "video_summary"]
     specific_ctx = [s for s in context_segments if s.get("level") != "video_summary"]
 
+#     prompt = f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+# You are a precise assistant that answers questions about video content.
+# You have access to both a full video summary and specific relevant segments.
+# Rules:
+# - For general questions (theme, topic, summary), use the full video context.
+# - For specific questions, cite the timestamp (e.g. "at 10.8s").
+# - If the answer is not found in the context, say "I could not find that in the video."
+# - Be concise and direct.
+# - Do not invent information not present in the context.<|eot_id|>
+# <|start_header_id|>user<|end_header_id|>
+# """
     prompt = f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-You are a precise assistant that answers questions about video content.
-You have access to both a full video summary and specific relevant segments.
-Rules:
-- For general questions (theme, topic, summary), use the full video context.
-- For specific questions, cite the timestamp (e.g. "at 10.8s").
-- If the answer is not found in the context, say "I could not find that in the video."
-- Be concise and direct.
-- Do not invent information not present in the context.<|eot_id|>
-<|start_header_id|>user<|end_header_id|>
-"""
+    You are an intelligent assistant analyzing movie trailers.
+    You have access to a video summary and specific segments containing character dialogue and visual descriptions.
+    Rules:
+    - You CAN and SHOULD use character dialogue and quotes to deduce the answer. If a character says something (e.g., "hanging like a bat"), treat it as what is happening in the scene.
+    - For general questions (theme, topic, summary), use the full video context.
+    - For specific questions, cite the timestamp (e.g. "at 10.8s").
+    - Only if the answer cannot be deduced from the dialogue or visual descriptions at all, say "I could not find that in the video."
+    - Be concise and direct.
+    - Do not hallucinate information outside of the provided text and visual contexts.<|eot_id|>
+    <|start_header_id|>user<|end_header_id|>
+    """
 
 
     if global_ctx:
